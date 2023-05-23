@@ -9,6 +9,7 @@ async function getListing(id) {
       cache: "no-store",
     }
   );
+
   return apiResponse.json();
 }
 
@@ -21,6 +22,7 @@ export default async function Page({ params }) {
     var renderedTitle = title.replace(/-/g, " ");
     return renderedTitle;
   }
+  console.log(listing);
 
   return (
     <main id="listings-detail">
