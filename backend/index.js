@@ -19,5 +19,4 @@ mongoose.connect(process.env.MONGODB_URL, {
   useNewUrlParser: true,
 });
 
-// connection
 app.listen(PORT, () => console.log(`Listening to port ${PORT}`));
