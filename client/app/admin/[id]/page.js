@@ -56,7 +56,7 @@ export default async function Page({ params }) {
     // Perform the update operation using the updated listing object
     try {
       await axios.put(
-        `http://localhost:8000/listing/admin/${listingId}`,
+        `${process.env.API_ENDPOINT}/admin/${listingId}`,
         listing
       );
       // Handle success or show a success message

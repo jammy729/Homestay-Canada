@@ -10,7 +10,7 @@ import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
 
 async function getListing() {
-  const apiResponse = await fetch("http://localhost:8000/listing");
+  const apiResponse = await fetch(`${process.env.API_ENDPOINT}`);
   return apiResponse.json();
 }
 
@@ -18,7 +18,7 @@ export default async function Page() {
   const listing = await getListing();
   console.log();
   const deleteListing = (id) => {
-    axios.delete(`http://localhost:8000/listing/delete/${id}`);
+    axios.delete(`${process.env.API_ENDPOINT}/delete/${id}`);
   };
 
   return (
