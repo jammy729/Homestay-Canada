@@ -3,12 +3,9 @@ import React from "react";
 import Image from "next/image";
 
 async function getListing(id) {
-  const apiResponse = await fetch(
-    `http://localhost:8000/listing/detail/${id}`,
-    {
-      cache: "no-store",
-    }
-  );
+  const apiResponse = await fetch(`${process.env.API_ENDPOINT}/detail/${id}`, {
+    cache: "no-store",
+  });
 
   return apiResponse.json();
 }

@@ -3,7 +3,7 @@ import Link from "next/link";
 import React from "react";
 
 async function getListing() {
-  const apiResponse = await fetch("http://localhost:8000/listing");
+  const apiResponse = await fetch(process.env.API_ENDPOINT);
   return apiResponse.json();
 }
 export default async function Page() {

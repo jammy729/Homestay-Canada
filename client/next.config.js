@@ -7,8 +7,7 @@ const nextConfig = {
     domains: ["i.postimg.cc", "cdn.shopify.com"],
   },
   env: {
-    MONGODB_URI:
-      "mongodb+srv://jyoo3607:James990729@rental-homestay-cluster.oiblylx.mongodb.net/rentalHomestay?retryWrites=true&w=majority",
+    API_ENDPOINT: "https://server-homestay-canada.vercel.app/listing",
   },
 };
 

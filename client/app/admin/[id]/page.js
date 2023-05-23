@@ -6,7 +6,7 @@ import TextField from "@mui/material/TextField";
 import Grid from "@mui/material/Grid";
 
 async function getListing(id) {
-  const apiResponse = await fetch(`http://localhost:8000/listing/admin/${id}`, {
+  const apiResponse = await fetch(`${process.env.API_ENDPOINT}/admin/${id}`, {
     cache: "no-store",
   });
   return apiResponse.json();
