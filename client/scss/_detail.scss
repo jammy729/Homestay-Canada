@@ -1,0 +1,34 @@
+main#listings-detail {
+  section.cover_image_container {
+    .cover_image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+
+  section.desc_container {
+    margin-top: 20px;
+  }
+
+  section.img_gallery_container {
+    .img_gallery_wrapper {
+      display: flex;
+      flex-wrap: wrap;
+      width: 100%;
+      gap: 10px;
+      justify-content: center;
+      .img_gallery {
+        @media only screen and (min-width: $screen-sm-min) {
+          width: calc(50% - 10px);
+        }
+        @media only screen and (min-width: $screen-md-min) {
+          width: calc(33.33333% - 10px);
+        }
+        @media only screen and (min-width: $screen-lg-min) {
+          width: calc(25% - 10px);
+        }
+      }
+    }
+  }
+}

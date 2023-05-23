@@ -1,0 +1,54 @@
+main {
+  .two_column {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    @media only screen and (min-width: $screen-md-min) {
+      flex-direction: row;
+      gap: 10px;
+      > div {
+        width: calc(50% - 5px);
+      }
+    }
+  }
+  .listings_img_container {
+    height: 20rem;
+    overflow: hidden;
+    position: relative;
+    margin-bottom: 10px;
+    @media only screen and (min-width: $screen-md-min) {
+      margin: 0;
+    }
+    .listings_img {
+      width: 100%;
+      height: 100%;
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      &:hover {
+        background-size: 150%;
+        transition: all 2s ease-in;
+      }
+      .listing_content {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        padding: 15px;
+        * {
+          color: white;
+        }
+        > h4 {
+          z-index: 3;
+        }
+        @media only screen and (min-width: $screen-lg-min) {
+          flex-direction: row;
+          align-items: flex-end;
+          justify-content: space-between;
+        }
+      }
+    }
+  }
+}

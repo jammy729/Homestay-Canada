@@ -1,0 +1,19 @@
+.container-fluid {
+  width: 100%;
+  margin: 0 auto;
+  max-width: 1600px;
+  padding: 0 1.6666rem;
+}
+
+.container-layout {
+  @extend .container-fluid;
+  max-width: 1200px;
+}
+
+.container-full-layout {
+  @extend .container-layout;
+  padding: 0;
+  @media (min-width: 576px) {
+    padding: 0 1.6666rem;
+  }
+}

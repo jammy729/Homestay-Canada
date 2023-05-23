@@ -1,0 +1,39 @@
+{
+  "name": "client",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@emotion/react": "^11.11.0",
+    "@emotion/styled": "^11.11.0",
+    "@fancyapps/ui": "^5.0.17",
+    "@mui/icons-material": "^5.11.16",
+    "@mui/joy": "^5.0.0-alpha.80",
+    "@mui/material": "^5.13.1",
+    "autoprefixer": "10.4.14",
+    "axios": "^1.4.0",
+    "dotenv": "^16.0.3",
+    "isomorphic-fetch": "^3.0.0",
+    "mongodb": "^5.5.0",
+    "mongoose": "^7.1.1",
+    "next": "13.4.2",
+    "postcss": "8.4.23",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "react-hydration-provider": "^1.0.2",
+    "react-icons": "^4.8.0",
+    "sass": "^1.62.1",
+    "supports-color": "^8.1.1",
+    "tailwindcss": "3.3.2"
+  },
+  "devDependencies": {
+    "@types/node": "20.1.4",
+    "@types/react": "18.2.6",
+    "typescript": "5.0.4"
+  }
+}

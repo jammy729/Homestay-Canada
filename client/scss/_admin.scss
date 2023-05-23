@@ -1,0 +1,46 @@
+section.listing {
+  .listing_container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+
+    .listings_img_container {
+      display: flex;
+      flex-direction: column;
+      background-color: lightgrey;
+      padding: 0 10px;
+      margin: 10px 0;
+      width: 100%;
+
+      .listing_detail {
+        padding: 0 10px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+      }
+
+      .cta {
+        display: flex;
+        flex-direction: column;
+      }
+      @media (min-width: $screen-md) {
+        flex-direction: row;
+        .thumbnail {
+          width: calc(100% / 3);
+        }
+        .listing_detail {
+          width: calc((100% / 2) * 0.75);
+        }
+        .cta {
+          width: calc((100% / 2) * 0.25);
+        }
+      }
+    }
+  }
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
