@@ -29,7 +29,7 @@ router.get("/city", async (req, res) => {
       query = { city };
     }
 
-    const result = await ListingModel.find(query).sort({ date: -1 }).limit(12);
+    const result = await ListingModel.find(query).sort({ date: -1 }).limit();
     res.status(200).json(result);
   } catch (err) {
     res.status(500).json(err);
