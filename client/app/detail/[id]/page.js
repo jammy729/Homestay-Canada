@@ -25,7 +25,7 @@ export default async function Page({ params }) {
     <main id="listings-detail">
       {listing.map((data, dataIndex) => (
         <div key={dataIndex}>
-          <section className="cover_image_container">
+          <section className="cover_image_container container-layout">
             <div className="cover_image_scroll">
               <Image
                 src={data.coverImage}

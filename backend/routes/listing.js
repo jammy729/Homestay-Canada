@@ -4,13 +4,48 @@ const mongoose = require("mongoose");
 
 const router = express.Router();
 
+// main .get 6
 router.get("/", async (req, res) => {
   try {
-    const result = await ListingModel.find({});
+    const result = await ListingModel.find({}).sort({ date: -1 }).limit(4);
     res.status(200).json(result);
   } catch (err) {
     res.status(500).json(err);
   }
+});
+
+router.get("/city", async (req, res) => {
+  let { city } = req.query;
+
+  // Set city to blank if "All" is selected
+  if (city === "All") {
+    city = "";
+  }
+
+  try {
+    let query = {};
+
+    if (city) {
+      query = { city };
+    }
+
+    const result = await ListingModel.find(query).sort({ date: -1 }).limit(12);
+    res.status(200).json(result);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
+router.get("/detail/:id", async (req, res) => {
+  const paramsid = String(req.params.id);
+
+  ListingModel.find({ address: paramsid })
+    .then(function (result) {
+      res.send(result);
+    })
+    .catch(function (err) {
+      res.status(400).json({ success: false });
+    });
 });
 
 // Create a new recipe
@@ -68,18 +103,6 @@ router.put("/update", async (req, res) => {
       .status(500)
       .json({ success: false, message: "Internal server error", error });
   }
-});
-
-router.get("/detail/:id", async (req, res) => {
-  const paramsid = String(req.params.id);
-
-  ListingModel.find({ address: paramsid })
-    .then(function (result) {
-      res.send(result);
-    })
-    .catch(function (err) {
-      res.status(400).json({ success: false });
-    });
 });
 
 router.get("/admin/:id", async (req, res) => {
