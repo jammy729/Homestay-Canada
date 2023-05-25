@@ -13,7 +13,6 @@ import Divider from "@mui/material/Divider";
 
 const footer = () => {
   const matches = useMediaQuery("(min-width:768px)");
-  console.log(`media query ${matches}`);
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
   const [message, setMessage] = useState("");

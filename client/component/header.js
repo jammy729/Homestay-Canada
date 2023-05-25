@@ -22,12 +22,6 @@ const header = () => {
 
   const isDashboard = pathname === "/admin";
 
-  if (isDashboard) {
-    console.log("this is admin");
-  } else {
-    console.log("this is not admin");
-  }
-
   const [show, setShow] = useState(false);
   return (
     <React.Fragment>

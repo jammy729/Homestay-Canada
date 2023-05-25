@@ -59,7 +59,6 @@ router.post("/", async (req, res) => {
     coverImage: req.body.coverImage,
     imageGallery: req.body.imageGallery,
   });
-  console.log(listing);
 
   try {
     const result = await listing.save();

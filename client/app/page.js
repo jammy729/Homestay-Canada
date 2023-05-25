@@ -8,7 +8,6 @@ async function getListing() {
 }
 export default async function Page() {
   const listing = await getListing();
-  console.log(listing.address);
   return (
     <main>
       {/* GREETINGS */}
