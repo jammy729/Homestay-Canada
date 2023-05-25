@@ -77,7 +77,7 @@ export default function Page() {
     <main>
       {/* City Filter Buttons */}
       <section className="city_filter container-layout">
-        <FormControl>
+        <FormControl className="city_filter_form">
           <InputLabel>도시</InputLabel>
           <Select
             labelId="city-filter-label"

@@ -1,6 +1,45 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import Image from "next/image";
+
+const LightBox = ({ children, src, alt, Wrapper = "div", zIndex = 100 }) => {
+  const [isOpen, setIsOpen] = React.useState(false);
+
+  const toggleIsOpen = () => {
+    setIsOpen(!isOpen);
+  };
+
+  return (
+    <Wrapper onClick={toggleIsOpen} style={{ height: "100%" }}>
+      {children}
+      {isOpen ? (
+        <div
+          onClick={toggleIsOpen}
+          style={{
+            position: "fixed",
+            top: "0",
+            left: "0",
+            height: "100vh",
+            width: "100vw",
+            backgroundColor: "rgba(0,0,0,0.7)",
+            cursor: "pointer",
+            zIndex,
+          }}
+        >
+          <img
+            src={src}
+            alt={alt}
+            style={{
+              height: "100%",
+              width: "100%",
+              objectFit: "contain",
+            }}
+          />
+        </div>
+      ) : null}
+    </Wrapper>
+  );
+};
 
 async function getListing(id) {
   const apiResponse = await fetch(`${process.env.API_ENDPOINT}/detail/${id}`, {
@@ -46,23 +85,24 @@ export default async function Page({ params }) {
           </section>
           <section className="img_gallery_container container-layout">
             <h3>방 사진 갤러리</h3>
+          </section>
+          <section className="img_gallery_container container-full-layout">
             <div className="img_gallery_wrapper">
               {listing.map((data) =>
                 data.imageGallery.map((image, index) => (
                   <div className="img_gallery" key={index}>
-                    <Image
-                      src={image}
-                      width={1080}
-                      height={800}
-                      alt={"hello"}
-                    />
+                    <LightBox src={image} alt={"hello"}>
+                      <Image
+                        src={image}
+                        width={1080}
+                        height={800}
+                        alt={"hello"}
+                      />
+                    </LightBox>
                   </div>
                 ))
               )}
             </div>
-          </section>
-          <section className="contact_me container-layout">
-            <h2>Contact Me Form</h2>
           </section>
         </div>
       ))}

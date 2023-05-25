@@ -12,6 +12,7 @@ main#listings-detail {
   }
 
   section.img_gallery_container {
+
     .img_gallery_wrapper {
       display: flex;
       flex-wrap: wrap;
@@ -30,5 +31,13 @@ main#listings-detail {
         }
       }
     }
+  }
+}
+
+.city_filter_form {
+  width: 100%;
+  margin-bottom: 10px;
+  @media (min-width: $screen-md) {
+    width: 25%;
   }
 }

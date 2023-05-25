@@ -15,13 +15,8 @@ export default async function Page() {
 
       <section className="two_column container-layout">
         <div className="greeting">
-          <h1>Welcome to ...</h1>
-          <p>
-            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Neque
-            doloribus hic molestias nam placeat quo recusandae nisi eligendi
-            voluptates ad! Non fugiat aspernatur hic magni natus similique vel
-            consequatur libero.
-          </p>
+          <h1>홈스테이 캐나다</h1>
+          <p>홈스테이 캐나다는 한인 유학생들을 위한 한인가정 배정전문 플랫폼입니다</p>
         </div>
         <div className="contact_me_short">
           <h1>Contact Me</h1>

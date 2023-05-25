@@ -17,6 +17,14 @@ header {
           font-size: 2rem;
         }
       }
+      svg {
+        width: 128px;
+        height: 128px;
+        @media (min-width: $screen-md) {
+          width: 200px;
+          height: 200px;
+        }
+      }
     }
     .navbar_menu {
       display: none;

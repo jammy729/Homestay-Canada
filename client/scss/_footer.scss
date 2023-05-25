@@ -1,8 +1,60 @@
 footer {
-  margin: 1rem 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 14px;
-  font-weight: 400;
+  section {
+    margin: 5rem 0;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    flex-direction: row;
+
+    @media (min-width: $screen-md) {
+      gap: 15px;
+      flex-direction: row;
+      flex-wrap: nowrap;
+    }
+
+    > div {
+      width: 100%;
+      @media (min-width: $screen-md) {
+        width: calc((100% / 4) - (15px / 2));
+      }
+    }
+
+    #footer_logo {
+      display: flex;
+      flex-direction: row;
+    }
+
+    #footer_menu {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      a {
+        color: black;
+        &:hover {
+          transition: 0.3s ease-in-out;
+          color: #1976d2;
+        }
+      }
+    }
+
+    #footer_contact {
+      margin-top: 2rem;
+      @media (min-width: $screen-md) {
+        margin-top: 0;
+      }
+      .phone_number,
+      .email {
+        color: black;
+        &:hover {
+          transition: 0.3s ease-in-out;
+          color: #1976d2;
+        }
+      }
+    }
+
+    #footer_contact_form {
+      display: flex;
+      flex-direction: column;
+    }
+  }
 }
