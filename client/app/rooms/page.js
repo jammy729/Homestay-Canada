@@ -4,7 +4,7 @@ import React, { useState, useEffect } from "react";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
-import Select, { SelectChangeEvent } from "@mui/material/Select";
+import Select from "@mui/material/Select";
 
 async function getListing(city) {
   let apiEndpoint = `${process.env.API_ENDPOINT}/city`;
@@ -19,13 +19,7 @@ async function getListing(city) {
 export default function Page() {
   const [selectedCity, setSelectedCity] = useState("All");
   const [listing, setListing] = useState([]);
-  const [age, setAge] = React.useState("");
-  const handleChange = (event) => {
-    setAge(event.target.value);
-  };
-  //   const handlseCityFilter = async (city) => {
-  //     setSelectedCity(city);
-  //   };
+  const [noResultsFound, setNoResultsFound] = useState(false);
 
   const handleCityFilter = async (event) => {
     setSelectedCity(event.target.value);
@@ -41,6 +35,7 @@ export default function Page() {
       getListing(selectedCity)
         .then((data) => {
           setListing(data);
+          setNoResultsFound(data.length === 0);
         })
         .catch((error) => {
           console.error("Failed to fetch data:", error);
@@ -50,6 +45,7 @@ export default function Page() {
       getListing()
         .then((data) => {
           setListing(data);
+          setNoResultsFound(data.length === 0);
         })
         .catch((error) => {
           console.error("Failed to fetch data:", error);
@@ -99,25 +95,35 @@ export default function Page() {
       {/* LISTINGS */}
 
       <section className="listings two_column container-full-layout">
-        {listing.map((listingData, dataIndex) => (
-          <div className="listings_img_container" key={dataIndex}>
-            <Link href={`/detail/${listingData.address}`}>
-              <div
-                className="hover_image listings_img"
-                style={{
-                  backgroundImage: `url(${listingData.coverImage})`,
-                }}
-              >
-                <div className="overlay dark" style={{ zIndex: "1" }}></div>
-                <div className="listing_content" style={{ zIndex: "2" }}>
-                  <h4>{renderTitle(listingData.address)}</h4>
-                  <h4>{listingData.city}</h4>
-                  <h4>${listingData.price}</h4>
+        {noResultsFound ? (
+          <p>No results found</p>
+        ) : (
+          listing.map((listingData, dataIndex) => (
+            <div className="listings_img_container" key={dataIndex}>
+              <Link href={`/detail/${listingData.address}`}>
+                <div
+                  className="hover_image listings_img"
+                  style={{
+                    backgroundImage: `url(${
+                      listingData.coverImage ||
+                      (listingData.imageGallery.length > 0
+                        ? listingData.imageGallery[0]
+                        : defaultImage)
+                    })`,
+                  }}
+                >
+                  <div className="overlay dark" style={{ zIndex: "1" }}></div>
+                  <div className="listing_content" style={{ zIndex: "2" }}>
+                    <h4>{renderTitle(listingData.address)}</h4>
+                    <h4>{listingData.city}</h4>
+                    <h4>${listingData.price}</h4>
+                  </div>
                 </div>
-              </div>
-            </Link>
-          </div>
-        ))}
+              </Link>
+            </div>
+          ))
+        )}
+        {}
       </section>
     </main>
   );

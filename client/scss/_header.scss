@@ -2,6 +2,8 @@ header {
   min-width: 100vw;
 
   #navbar {
+    max-width: 100%;
+    padding: 0 20px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -9,6 +11,7 @@ header {
     justify-content: space-between;
     @media only screen and (min-width: $screen-md-min) {
       flex-direction: column;
+      padding: 20px;
     }
     .navbar_logo {
       span {
@@ -45,39 +48,75 @@ header {
       justify-content: space-around;
       padding: 0;
       box-sizing: border-box;
+      position: relative;
+
+      &.fixed {
+        position: fixed;
+        top: 60px;
+        right: 20px;
+      }
+
       @media only screen and (min-width: $screen-md-min) {
         display: none;
       }
-      .hamburger_menu {
+
+      span.hamburger_menu {
         z-index: 999;
         width: 30px;
         height: 2px;
+        transition: transform 0.3s;
+        position: relative;
+
         &.black {
           background-color: black;
         }
         &.white {
           background-color: white;
+          &:nth-child(1) {
+            transform: rotate(45deg);
+            transform-origin: center;
+          }
+          &:nth-child(2) {
+            transform: rotate(-45deg);
+            transform-origin: center;
+          }
+          &:nth-child(1) {
+            top: 0px;
+          }
+
+          &:nth-child(2) {
+            top: -8px;
+          }
+
+          &:nth-child(3) {
+            opacity: 0;
+          }
         }
       }
     }
     .mobile_drawer {
       z-index: 5;
-      position: absolute;
+      position: fixed;
       top: 0;
       right: 0;
-      width: 70vw;
-      height: 100vh;
+      width: 100vw;
+      height: 100%;
       display: flex;
       justify-content: center;
       flex-direction: column;
       background-color: black;
-      transition: 0.5s ease-in-out;
+      transition: 0.5s ease-in-out all;
+      transform: translateX(100%);
+
+      &.open {
+        transform: translateX(0%);
+      }
+      &.close {
+        transform: translateX(100%);
+      }
       * {
         color: white;
         text-align: center;
-      }
-      @media only screen and (min-width: $screen-md-min) {
-        display: none;
       }
 
       .mobile_items {

@@ -22,11 +22,11 @@ const header = () => {
 
   const isDashboard = pathname === "/admin";
 
-  const [show, setShow] = useState(false);
+  const [open, setOpen] = useState(false);
   return (
     <React.Fragment>
       <header>
-        <div id="navbar" style={{ maxWidth: "100%", padding: "20px" }}>
+        <div id="navbar">
           <div className="navbar_logo">
             <Link
               href="/"
@@ -75,36 +75,32 @@ const header = () => {
                     <div className="navbar_items">{data.name}</div>
                   </Link>
                 ))}
-            {/* {navbarItems.map((data, index) => (
-              <Link href={data.path} key={index}>
-                <div className="navbar_items">{data.name}</div>
-              </Link>
-            ))} */}
           </div>
-          <div className="mobile_menu" onClick={() => setShow(!show)}>
-            <div
-              className={"hamburger_menu " + (show ? "white" : "black")}
-            ></div>
-            <div
-              className={"hamburger_menu " + (show ? "white" : "black")}
-            ></div>
-            <div
-              className={"hamburger_menu " + (show ? "white" : "black")}
-            ></div>
+          <div
+            onClick={() => setOpen(!open)}
+            className={"mobile_menu " + (open ? "fixed" : "")}
+          >
+            <span
+              className={"hamburger_menu " + (open ? "white" : "black")}
+            ></span>
+            <span
+              className={"hamburger_menu " + (open ? "white" : "black")}
+            ></span>
+            <span
+              className={"hamburger_menu " + (open ? "white" : "black")}
+            ></span>
           </div>
-          {show && (
-            <div className="mobile_drawer">
-              {navbarItems.map((data, mobileIndex) => (
-                <div className="mobile_items" key={mobileIndex}>
-                  <Link href={data.path}>
-                    <div className="navbar_items">
-                      <h2>{data.name}</h2>
-                    </div>
-                  </Link>
-                </div>
-              ))}
-            </div>
-          )}
+          <div className={"mobile_drawer " + (open ? "open" : "close")}>
+            {navbarItems.map((data, mobileIndex) => (
+              <div className="mobile_items" key={mobileIndex}>
+                <Link href={data.path}>
+                  <div className="navbar_items">
+                    <h2>{data.name}</h2>
+                  </div>
+                </Link>
+              </div>
+            ))}
+          </div>
         </div>
       </header>
     </React.Fragment>

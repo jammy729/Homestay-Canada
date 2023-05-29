@@ -4,22 +4,23 @@ import React from "react";
 
 async function getListing() {
   const apiResponse = await fetch(process.env.API_ENDPOINT);
+
   return apiResponse.json();
 }
 export default async function Page() {
   const listing = await getListing();
+  console.log(listing);
   return (
     <main>
       {/* GREETINGS */}
 
-      <section className="two_column container-layout">
+      <section className="container-layout">
         <div className="greeting">
           <h1>홈스테이 캐나다</h1>
-          <p>홈스테이 캐나다는 한인 유학생들을 위한 한인가정 배정전문 플랫폼입니다</p>
-        </div>
-        <div className="contact_me_short">
-          <h1>Contact Me</h1>
-          <p>778 903-0729</p>
+          <p>
+            홈스테이 캐나다는 한인 유학생들을 위한 한인가정 배정전문
+            플랫폼입니다
+          </p>
         </div>
       </section>
 
@@ -31,12 +32,17 @@ export default async function Page() {
               <div
                 className="hover_image listings_img"
                 style={{
-                  backgroundImage: `url(${listingData.coverImage})`,
+                  backgroundImage: `url(${
+                    listingData.coverImage ||
+                    (listingData.imageGallery.length > 0
+                      ? listingData.imageGallery[0]
+                      : defaultImage)
+                  })`,
                 }}
               >
                 <div className="overlay dark" style={{ zIndex: "1" }}></div>
                 <div className="listing_content" style={{ zIndex: "2" }}>
-                  <h4>{renderTitle(listingData.address)}</h4>
+                  <h4>{listingData.address}</h4>
                   <h4>{listingData.city}</h4>
                   <h4>${listingData.price}</h4>
                 </div>
@@ -47,10 +53,4 @@ export default async function Page() {
       </section>
     </main>
   );
-}
-
-//remove (-)
-function renderTitle(title) {
-  var renderedTitle = title.replace(/-/g, " ");
-  return renderedTitle;
 }

@@ -50,14 +50,18 @@ async function getListing(id) {
 }
 
 export default async function Page({ params }) {
+  const [active, setActive] = useState(false);
+
+  const handleMouseOver = () => {
+    setActive(true);
+  };
+
+  const handleMouseOut = () => {
+    setActive(false);
+  };
   const { id } = params;
 
   const listing = await getListing(id);
-
-  function renderTitle(title) {
-    var renderedTitle = title.replace(/-/g, " ");
-    return renderedTitle;
-  }
   console.log(listing);
 
   return (
@@ -67,7 +71,12 @@ export default async function Page({ params }) {
           <section className="cover_image_container container-layout">
             <div className="cover_image_scroll">
               <Image
-                src={data.coverImage}
+                src={
+                  data.coverImage ||
+                  (data.imageGallery.length > 0
+                    ? data.imageGallery[0]
+                    : defaultImage)
+                }
                 alt="hello"
                 className="cover_image"
                 layout="responsive"
@@ -78,7 +87,7 @@ export default async function Page({ params }) {
           </section>
 
           <section className="desc_container container-layout">
-            <h1>{renderTitle(data.address)}</h1>
+            <h1>{data.address}</h1>
             <h2 style={{ textTransform: "uppercase" }}>{data.city}</h2>
             <h3 className="description_title">방 정보</h3>
             <p>{data.description}</p>
@@ -91,12 +100,15 @@ export default async function Page({ params }) {
               {listing.map((data) =>
                 data.imageGallery.map((image, index) => (
                   <div className="img_gallery" key={index}>
-                    <LightBox src={image} alt={"hello"}>
+                    <LightBox
+                      src={image}
+                      alt={`Images for ${data.address}, in ${data.city}`}
+                    >
                       <Image
                         src={image}
                         width={1080}
                         height={800}
-                        alt={"hello"}
+                        alt={`Images for ${data.address}, in ${data.city}`}
                       />
                     </LightBox>
                   </div>
