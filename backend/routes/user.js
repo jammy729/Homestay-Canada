@@ -3,7 +3,14 @@ const UserModel = require("../models/User");
 
 const router = express.Router();
 
-router.get("/", (req, res) => {});
+router.get("/", async (req, res) => {
+  try {
+    const result = await UserModel.find({}).sort().limit();
+    res.status(200).json(result);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
 
 router.post("/", async (req, res) => {
   const { email, password } = req.body;
