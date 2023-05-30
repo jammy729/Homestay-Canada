@@ -2,9 +2,13 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { HistoryRounded } from "@mui/icons-material";
+
 export default function SignUp() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const history = useRouter();
 
   async function submit(e) {
     e.preventDefault();
@@ -19,7 +23,7 @@ export default function SignUp() {
           if (res.data == "exist") {
             alert("User already exists");
           } else if (res.data == "notexist") {
-            alert("User does not exist");
+            history.push("/admin", { state: { id: email } });
           }
         })
         .catch((e) => {

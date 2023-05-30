@@ -3,7 +3,7 @@ const UserModel = require("../models/User");
 
 const router = express.Router();
 
-router.get("/", async (req, res) => {
+router.get("/login", async (req, res) => {
   try {
     const result = await UserModel.find({}).sort().limit();
     res.status(200).json(result);
@@ -12,21 +12,23 @@ router.get("/", async (req, res) => {
   }
 });
 
-router.post("/", async (req, res) => {
+router.post("/login", async (req, res) => {
   const { email, password } = req.body;
 
   try {
-    const check = await UserModel.findOne({
-      email: email,
-    });
-
-    if (check) {
-      res.json("exist");
+    const user = await UserModel.findOne({ email });
+    console.log(user.password);
+    if (user) {
+      if (user.password === password) {
+        res.json("success");
+      } else {
+        res.json("incorrect");
+      }
     } else {
       res.json("notexist");
     }
-  } catch (e) {
-    res.json("fail");
+  } catch (error) {
+    res.status(500).json("fail");
   }
 });
 

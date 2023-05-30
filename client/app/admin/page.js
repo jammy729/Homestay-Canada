@@ -3,25 +3,28 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import axios from "axios";
 import Link from "next/link";
+
 export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const router = useRouter();
+  const history = useRouter();
 
   async function submit(e) {
     e.preventDefault();
 
     try {
       await axios
-        .post(`${process.env.API_ENDPOINT}/user`, {
+        .post(`${process.env.API_ENDPOINT}/user/login`, {
           email,
           password,
         })
         .then((res) => {
-          if (res.data == "exist") {
+          if (res.data == "success") {
+            history.push("/admin/dashboard", { state: { id: email } });
+          } else if (res.data === "incorrect") {
             alert("User have not sign up");
-          } else if (res.data == "notexist") {
-            alert("User have not sign up");
+          } else if (res.data === "notexist") {
+            alert("User has not signed up");
           }
         })
         .catch((e) => {
