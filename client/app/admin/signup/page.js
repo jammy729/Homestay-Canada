@@ -1,27 +1,25 @@
 "use client";
-import { useState } from "react";
-import { useRouter } from "next/navigation";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Link from "next/link";
-export default function LoginPage() {
+export default function SignUp() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const router = useRouter();
 
   async function submit(e) {
     e.preventDefault();
 
     try {
       await axios
-        .post(`${process.env.API_ENDPOINT}/user`, {
+        .post(`${process.env.API_ENDPOINT}/user/signup`, {
           email,
           password,
         })
         .then((res) => {
           if (res.data == "exist") {
-            alert("User have not sign up");
+            alert("User already exists");
           } else if (res.data == "notexist") {
-            alert("User have not sign up");
+            alert("User does not exist");
           }
         })
         .catch((e) => {
@@ -34,8 +32,9 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="container-layout">
-      <h1>Login Page</h1>
+    <section className="container-fluid">
+      <h1>Signup</h1>
+
       <form action="POST">
         <input
           type="email"
@@ -54,7 +53,11 @@ export default function LoginPage() {
         <input type="submit" onClick={submit} />
       </form>
 
-      <Link href="/admin/signup">Signup Page</Link>
-    </div>
+      <br />
+      <p>OR</p>
+      <br />
+
+      <Link href="/admin">Login Page</Link>
+    </section>
   );
 }

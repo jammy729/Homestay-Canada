@@ -37,7 +37,7 @@ export default function Page() {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      await axios.post(`${process.env.API_ENDPOINT}`, { ...listing });
+      await axios.post(`${process.env.API_ENDPOINT}/listing`, { ...listing });
 
       alert("Listing Created");
     } catch (error) {

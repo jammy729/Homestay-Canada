@@ -5,9 +5,10 @@ import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
+import ListingGallery from "@/component/listingGallery";
 
 async function getListing(city) {
-  let apiEndpoint = `${process.env.API_ENDPOINT}/city`;
+  let apiEndpoint = `${process.env.API_ENDPOINT}/listing/city`;
   if (city && city !== "All") {
     apiEndpoint += `?city=${encodeURIComponent(city)}`;
   }
@@ -24,10 +25,7 @@ export default function Page() {
   const handleCityFilter = async (event) => {
     setSelectedCity(event.target.value);
   };
-  function renderTitle(title) {
-    var renderedTitle = title.replace(/-/g, " ");
-    return renderedTitle;
-  }
+
   const cities = ["Surrey", "Burnaby"];
 
   useEffect(() => {
@@ -98,29 +96,19 @@ export default function Page() {
         {noResultsFound ? (
           <p>No results found</p>
         ) : (
-          listing.map((listingData, dataIndex) => (
-            <div className="listings_img_container" key={dataIndex}>
-              <Link href={`/detail/${listingData.address}`}>
-                <div
-                  className="hover_image listings_img"
-                  style={{
-                    backgroundImage: `url(${
-                      listingData.coverImage ||
-                      (listingData.imageGallery.length > 0
-                        ? listingData.imageGallery[0]
-                        : defaultImage)
-                    })`,
-                  }}
-                >
-                  <div className="overlay dark" style={{ zIndex: "1" }}></div>
-                  <div className="listing_content" style={{ zIndex: "2" }}>
-                    <h4>{renderTitle(listingData.address)}</h4>
-                    <h4>{listingData.city}</h4>
-                    <h4>${listingData.price}</h4>
-                  </div>
-                </div>
-              </Link>
-            </div>
+          listing.map((data, dataIndex) => (
+            <ListingGallery
+              key={dataIndex}
+              address={data.address}
+              city={data.city}
+              price={data.price}
+              coverImage={
+                data.coverImage ||
+                (data.imageGallery.length > 0
+                  ? data.imageGallery[0]
+                  : data.imageGallery[1])
+              }
+            />
           ))
         )}
         {}

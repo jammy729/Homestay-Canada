@@ -1,0 +1,7 @@
+.city_filter_form {
+  width: 100%;
+  margin-bottom: 20px;
+  @media (min-width: $screen-md) {
+    width: 25%;
+  }
+}

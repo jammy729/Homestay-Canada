@@ -3,9 +3,12 @@ require("dotenv").config();
 const PORT = process.env.PORT;
 
 const express = require("express");
-const listingRouter = require("./routes/listing");
 const mongoose = require("mongoose");
 const cors = require("cors");
+
+//routers
+const listingRouter = require("./routes/listing");
+const userRouter = require("./routes/user");
 
 // Middlewares
 const app = express();
@@ -14,6 +17,7 @@ app.use(cors());
 
 // Routes
 app.use("/listing", listingRouter);
+app.use("/user", userRouter);
 
 mongoose.connect(process.env.MONGODB_URL, {
   useNewUrlParser: true,

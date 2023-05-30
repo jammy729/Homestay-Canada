@@ -42,9 +42,12 @@ const LightBox = ({ children, src, alt, Wrapper = "div", zIndex = 100 }) => {
 };
 
 async function getListing(id) {
-  const apiResponse = await fetch(`${process.env.API_ENDPOINT}/detail/${id}`, {
-    cache: "no-store",
-  });
+  const apiResponse = await fetch(
+    `${process.env.API_ENDPOINT}/listing/detail/${id}`,
+    {
+      cache: "no-store",
+    }
+  );
 
   return apiResponse.json();
 }
