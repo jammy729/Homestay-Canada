@@ -18,11 +18,8 @@ main#listings-detail {
       width: 100%;
       gap: 10px;
       justify-content: center;
+      cursor: pointer;
       .img_gallery {
-        &:hover {
-          filter: brightness(50%);
-          transition: all 0.3s ease;
-        }
         @media only screen and (min-width: $screen-sm-min) {
           width: calc(50% - 10px);
         }
@@ -36,5 +33,3 @@ main#listings-detail {
     }
   }
 }
-
-

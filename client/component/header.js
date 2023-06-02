@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import Head from "next/head";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 
 const navbarItems = [
   { path: "/rooms", name: "방 보기" },
@@ -18,9 +18,9 @@ const dashboardItems = [
 
 const header = () => {
   const pathname = usePathname();
-  console.log(pathname);
+  const isDashboard = pathname.startsWith("/admin");
 
-  const isDashboard = pathname === "/admin";
+  console.log(isDashboard);
 
   const [open, setOpen] = useState(false);
   return (

@@ -40,28 +40,6 @@ export default async function Page() {
                 : data.imageGallery[1])
             }
           />
-          // <div className="listings_img_container" key={dataIndex}>
-          //   <Link href={`/detail/${listingData.address}`}>
-          //     <div
-          //       className="hover_image listings_img"
-          //       style={{
-          //         backgroundImage: `url(${
-          //           listingData.coverImage ||
-          //           (listingData.imageGallery.length > 0
-          //             ? listingData.imageGallery[0]
-          //             : defaultImage)
-          //         })`,
-          //       }}
-          //     >
-          //       <div className="overlay dark" style={{ zIndex: "1" }}></div>
-          //       <div className="listing_content" style={{ zIndex: "2" }}>
-          //         <h4>{listingData.address}</h4>
-          //         <h4>{listingData.city}</h4>
-          //         <h4>{detectStringType(listingData.price)}</h4>
-          //       </div>
-          //     </div>
-          //   </Link>
-          // </div>
         ))}
       </section>
     </main>

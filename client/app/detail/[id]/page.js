@@ -2,19 +2,25 @@
 import React, { useState } from "react";
 import Image from "next/image";
 
-const LightBox = ({ children, src, alt, Wrapper = "div", zIndex = 100 }) => {
-  const [isOpen, setIsOpen] = React.useState(false);
+const LightBox = ({ children, src, alt, zIndex = 100 }) => {
+  const [isOpen, setIsOpen] = useState(false);
 
   const toggleIsOpen = () => {
     setIsOpen(!isOpen);
   };
 
+  const stopPropagation = (event) => {
+    event.stopPropagation();
+  };
+  console.log("is it open?:", isOpen);
+
   return (
-    <Wrapper onClick={toggleIsOpen} style={{ height: "100%" }}>
+    <div onClick={toggleIsOpen} style={{ height: "100%" }}>
       {children}
       {isOpen ? (
         <div
           onClick={toggleIsOpen}
+          onMouseDown={stopPropagation} // Stop click event propagation on the inner div
           style={{
             position: "fixed",
             top: "0",
@@ -26,18 +32,20 @@ const LightBox = ({ children, src, alt, Wrapper = "div", zIndex = 100 }) => {
             zIndex,
           }}
         >
-          <img
+          <Image
             src={src}
             alt={alt}
+            width={1080}
+            height={800}
             style={{
               height: "100%",
               width: "100%",
-              objectFit: "contain",
+              objectFit: "none",
             }}
           />
         </div>
       ) : null}
-    </Wrapper>
+    </div>
   );
 };
 
@@ -53,15 +61,6 @@ async function getListing(id) {
 }
 
 export default async function Page({ params }) {
-  const [active, setActive] = useState(false);
-
-  const handleMouseOver = () => {
-    setActive(true);
-  };
-
-  const handleMouseOut = () => {
-    setActive(false);
-  };
   const { id } = params;
 
   const listing = await getListing(id);
@@ -82,7 +81,6 @@ export default async function Page({ params }) {
                 }
                 alt="hello"
                 className="cover_image"
-                layout="responsive"
                 width={1080}
                 height={800}
               />
@@ -101,14 +99,14 @@ export default async function Page({ params }) {
           <section className="img_gallery_container container-full-layout">
             <div className="img_gallery_wrapper">
               {listing.map((data) =>
-                data.imageGallery.map((image, index) => (
+                data.imageGallery.map((imageData, index) => (
                   <div className="img_gallery" key={index}>
                     <LightBox
-                      src={image}
+                      src={imageData}
                       alt={`Images for ${data.address}, in ${data.city}`}
                     >
                       <Image
-                        src={image}
+                        src={imageData}
                         width={1080}
                         height={800}
                         alt={`Images for ${data.address}, in ${data.city}`}

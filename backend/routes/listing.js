@@ -36,10 +36,23 @@ router.get("/city", async (req, res) => {
   }
 });
 
-router.get("/detail/:id", async (req, res) => {
-  const paramsid = String(req.params.id);
+// router.get("/detail/:id/", async (req, res) => {
+//   // const paramsid = String(req.params.id);
+//   const address = String(req.params.id);
 
-  ListingModel.find({ address: paramsid })
+//   ListingModel.find({ address: address, id: id })
+//     .then(function (result) {
+//       res.send(result);
+//     })
+//     .catch(function (err) {
+//       res.status(400).json({ success: false });
+//     });
+// });
+router.get("/detail/:address/:id", async (req, res) => {
+  // const { id, address } = req.params;
+  const address = req.params.address;
+  const id = req.params.id;
+  ListingModel.findOne({ address, _id: id })
     .then(function (result) {
       res.send(result);
     })

@@ -8,6 +8,7 @@ import { AiFillEdit, AiFillDelete } from "react-icons/ai";
 import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
 import Snackbar from "@mui/material/Snackbar";
+import detectStringType from "@/utils/regex";
 
 const handleClick = () => {
   setOpen(true);
@@ -62,7 +63,7 @@ export default async function Page() {
                 <h3>ID: {listingData._id}</h3>
                 <h3>Address: {listingData.address}</h3>
                 <h3>City: {listingData.city}</h3>
-                <h3>Price: ${listingData.price}</h3>
+                <h3>Price: {detectStringType(listingData.price)}</h3>
               </div>
               <div className="cta">
                 <Stack
