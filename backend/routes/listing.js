@@ -48,6 +48,17 @@ router.get("/city", async (req, res) => {
 //       res.status(400).json({ success: false });
 //     });
 // });
+// router.get("/detail/:id", async (req, res) => {
+//   const { id, address } = req.params;
+//   ListingModel.findOne({ address, _id: id })
+//     .then(function (result) {
+//       res.send(result);
+//     })
+//     .catch(function (err) {
+//       res.status(400).json({ success: false });
+//     });
+// });
+
 router.get("/detail/:address/:id", async (req, res) => {
   // const { id, address } = req.params;
   const address = req.params.address;
