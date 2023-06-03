@@ -5,7 +5,11 @@ import detectStringType from "@/utils/regex";
 const ListingGallery = ({ address, id, city, price, coverImage }) => {
   return (
     <div className="listings_img_container">
-      <Link href={`/detail/${address}/${id}`}>
+      <Link
+        href={`/listing/detail?address=${encodeURIComponent(
+          address
+        )}&id=${encodeURIComponent(id)}`}
+      >
         <div
           className="hover_image listings_img"
           style={{
