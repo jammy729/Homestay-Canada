@@ -1,7 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import Image from "next/image";
-
+import { useSearchParams } from "next/navigation";
 const LightBox = ({ children, src, alt, zIndex = 100 }) => {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -12,7 +12,6 @@ const LightBox = ({ children, src, alt, zIndex = 100 }) => {
   const stopPropagation = (event) => {
     event.stopPropagation();
   };
-  console.log("is it open?:", isOpen);
 
   return (
     <div onClick={toggleIsOpen} style={{ height: "100%" }}>
@@ -63,66 +62,62 @@ async function getListing(address, id) {
   return apiResponse.json();
 }
 
-export default async function Page({ params }) {
-  const { id, address } = params;
+export default async function Page() {
+  // const { id, address } = params;
 
-  const listing = await getListing(address, id);
+  const searchParams = useSearchParams();
+  const address = searchParams.get("address");
+  const id = searchParams.get("id");
 
-  console.log({ listing });
+  const data = await getListing(address, id);
 
   return (
     <main id="listings-detail">
-      {listing.map((data, dataIndex) => (
-        <div key={dataIndex}>
-          <section className="cover_image_container container-layout">
-            <div className="cover_image_scroll">
-              <Image
-                src={
-                  data.coverImage ||
-                  (data.imageGallery.length > 0
-                    ? data.imageGallery[0]
-                    : defaultImage)
-                }
-                alt="hello"
-                className="cover_image"
-                width={1080}
-                height={800}
-              />
-            </div>
-          </section>
-
-          <section className="desc_container container-layout">
-            <h1>{data.address}</h1>
-            <h2 style={{ textTransform: "uppercase" }}>{data.city}</h2>
-            <h3 className="description_title">방 정보</h3>
-            <p>{data.description}</p>
-          </section>
-          <section className="img_gallery_container container-layout">
-            <h3>방 사진 갤러리</h3>
-          </section>
-          <section className="img_gallery_container container-full-layout">
-            <div className="img_gallery_wrapper">
-              {listing.map((data) =>
-                data.imageGallery.map((imageData, index) => (
-                  <div className="img_gallery" key={index}>
-                    <LightBox
-                      src={imageData}
-                      alt={`Images for ${data.address}, in ${data.city}`}
-                    >
-                      <Image
-                        src={imageData}
-                        width={1080}
-                        height={800}
-                        alt={`Images for ${data.address}, in ${data.city}`}
-                      />
-                    </LightBox>
-                  </div>
-                ))
-              )}
-            </div>
-          </section>
+      <section className="cover_image_container container-layout">
+        <div className="cover_image_scroll">
+          <Image
+            src={
+              data.coverImage ||
+              (data.imageGallery.length > 0
+                ? data.imageGallery[0]
+                : defaultImage)
+            }
+            alt="hello"
+            className="cover_image"
+            width={1080}
+            height={800}
+          />
         </div>
-      ))}
+      </section>
+
+      <section className="desc_container container-layout">
+        <h1>{data.address}</h1>
+        <h2 style={{ textTransform: "uppercase" }}>{data.city}</h2>
+        <h3 className="description_title">방 정보</h3>
+        <p>{data.description}</p>
+      </section>
+      <section className="img_gallery_container container-layout">
+        <h3>방 사진 갤러리</h3>
+      </section>
+      <section className="img_gallery_container container-full-layout">
+        <div className="img_gallery_wrapper">
+          {data.imageGallery.map((imageData, index) => (
+            <div className="img_gallery" key={index}>
+              <LightBox
+                src={imageData}
+                alt={`Images for ${data.address}, in ${data.city}`}
+              >
+                <Image
+                  src={imageData}
+                  width={1080}
+                  height={800}
+                  alt={`Images for ${data.address}, in ${data.city}`}
+                />
+              </LightBox>
+            </div>
+          ))}
+        </div>
+      </section>
     </main>
   );
 }

@@ -20,8 +20,6 @@ const header = () => {
   const pathname = usePathname();
   const isDashboard = pathname.startsWith("/admin");
 
-  console.log(isDashboard);
-
   const [open, setOpen] = useState(false);
   return (
     <React.Fragment>

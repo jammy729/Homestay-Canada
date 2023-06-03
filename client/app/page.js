@@ -1,5 +1,4 @@
 "use client";
-import Link from "next/link";
 import React from "react";
 import ListingGallery from "@/component/listingGallery";
 async function getListing() {
@@ -9,7 +8,7 @@ async function getListing() {
 }
 export default async function Page() {
   const listing = await getListing();
-  console.log(listing);
+  console.log({ listing });
 
   return (
     <main>
