@@ -49,20 +49,24 @@ const LightBox = ({ children, src, alt, zIndex = 100 }) => {
   );
 };
 
-async function getListing(id) {
-  const apiResponse = await fetch(
-    `${process.env.API_ENDPOINT}/listing/detail/${id}`,
-    {
-      cache: "no-store",
-    }
-  );
+async function getListing(address, id) {
+  const url = `${
+    process.env.API_ENDPOINT
+  }/listing/detail?address=${encodeURIComponent(
+    address
+  )}&id=${encodeURIComponent(id)}`;
+
+  const apiResponse = await fetch(url, {
+    cache: "no-store",
+  });
 
   return apiResponse.json();
 }
-export default async function Page({ params }) {
-  const { id } = params;
 
-  const listing = await getListing(id);
+export default async function Page({ params }) {
+  const { id, address } = params;
+
+  const listing = await getListing(address, id);
 
   console.log({ listing });
 
@@ -122,67 +126,3 @@ export default async function Page({ params }) {
     </main>
   );
 }
-// export default async function Page({ params }) {
-//   const { id, address } = params;
-//   const addressData = getListing(address);
-//   const idData = getListing(id);
-//   const listing = await getListing(addressData, idData);
-
-//   console.log({ listing });
-
-//   return (
-//     <main id="listings-detail">
-//       {listing.map((data, dataIndex) => (
-//         <div key={dataIndex}>
-//           <section className="cover_image_container container-layout">
-//             <div className="cover_image_scroll">
-//               <Image
-//                 src={
-//                   data.coverImage ||
-//                   (data.imageGallery.length > 0
-//                     ? data.imageGallery[0]
-//                     : defaultImage)
-//                 }
-//                 alt="hello"
-//                 className="cover_image"
-//                 width={1080}
-//                 height={800}
-//               />
-//             </div>
-//           </section>
-
-//           <section className="desc_container container-layout">
-//             <h1>{data.address}</h1>
-//             <h2 style={{ textTransform: "uppercase" }}>{data.city}</h2>
-//             <h3 className="description_title">방 정보</h3>
-//             <p>{data.description}</p>
-//           </section>
-//           <section className="img_gallery_container container-layout">
-//             <h3>방 사진 갤러리</h3>
-//           </section>
-//           <section className="img_gallery_container container-full-layout">
-//             <div className="img_gallery_wrapper">
-//               {listing.map((data) =>
-//                 data.imageGallery.map((imageData, index) => (
-//                   <div className="img_gallery" key={index}>
-//                     <LightBox
-//                       src={imageData}
-//                       alt={`Images for ${data.address}, in ${data.city}`}
-//                     >
-//                       <Image
-//                         src={imageData}
-//                         width={1080}
-//                         height={800}
-//                         alt={`Images for ${data.address}, in ${data.city}`}
-//                       />
-//                     </LightBox>
-//                   </div>
-//                 ))
-//               )}
-//             </div>
-//           </section>
-//         </div>
-//       ))}
-//     </main>
-//   );
-// }

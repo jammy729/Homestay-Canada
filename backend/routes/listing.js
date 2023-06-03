@@ -36,10 +36,10 @@ router.get("/city", async (req, res) => {
   }
 });
 
-router.get("/detail/:id", async (req, res) => {
-  // const address = req.params.address;
-  const id = req.params.id;
-  ListingModel.findById({ id })
+router.get("/detail", async (req, res) => {
+  const address = req.query.address;
+  const id = req.query.id;
+  ListingModel.findOne({ address: address, _id: id })
     .then(function (result) {
       res.send(result);
     })
