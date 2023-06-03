@@ -30,6 +30,7 @@ export default async function Page() {
         {listing.map((data, dataIndex) => (
           <ListingGallery
             key={dataIndex}
+            id={data._id}
             address={data.address}
             city={data.city}
             price={data.price}

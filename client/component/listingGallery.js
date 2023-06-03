@@ -2,10 +2,10 @@ import React from "react";
 import Link from "next/link";
 import detectStringType from "@/utils/regex";
 
-const ListingGallery = ({ address, city, price, coverImage }) => {
+const ListingGallery = ({ address, id, city, price, coverImage }) => {
   return (
     <div className="listings_img_container">
-      <Link href={`/detail/${address}`}>
+      <Link href={`/detail/${address}/${id}`}>
         <div
           className="hover_image listings_img"
           style={{

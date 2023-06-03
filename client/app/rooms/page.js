@@ -100,6 +100,7 @@ export default function Page() {
             <ListingGallery
               key={dataIndex}
               address={data.address}
+              id={data._id}
               city={data.city}
               price={data.price}
               coverImage={

@@ -49,9 +49,9 @@ const LightBox = ({ children, src, alt, zIndex = 100 }) => {
   );
 };
 
-async function getListing(id) {
+async function getListing(address, id) {
   const apiResponse = await fetch(
-    `${process.env.API_ENDPOINT}/listing/detail/${id}`,
+    `${process.env.API_ENDPOINT}/listing/detail/${address}/${id}`,
     {
       cache: "no-store",
     }
@@ -61,9 +61,10 @@ async function getListing(id) {
 }
 
 export default async function Page({ params }) {
-  const { id } = params;
-
-  const listing = await getListing(id);
+  const { id, address } = params;
+  const addressData = getListing(address);
+  const idData = getListing(id);
+  const listing = await getListing(addressData, idData);
 
   console.log({ listing });
 

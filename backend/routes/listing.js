@@ -63,7 +63,18 @@ router.get("/detail/:address/:id", async (req, res) => {
   // const { id, address } = req.params;
   const address = req.params.address;
   const id = req.params.id;
-  ListingModel.findOne({ address, _id: id })
+  ListingModel.findOne({ address: address, _id: id })
+    .then(function (result) {
+      res.send(result);
+    })
+    .catch(function (err) {
+      res.status(400).json({ success: false });
+    });
+});
+
+router.get("/detail/:id", async (req, res) => {
+  const { id } = req.params;
+  ListingModel.findOne({ id })
     .then(function (result) {
       res.send(result);
     })
