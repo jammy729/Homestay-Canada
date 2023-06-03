@@ -35,6 +35,13 @@ header {
       @media only screen and (min-width: $screen-md-min) {
         display: inline-flex;
       }
+      .navbar_items {
+        color: black;
+        &:hover {
+          transition: 0.3s ease-in-out;
+          color: #1976d2;
+        }
+      }
     }
     .mobile_menu {
       z-index: 8;
