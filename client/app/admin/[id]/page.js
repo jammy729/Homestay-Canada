@@ -4,29 +4,37 @@ import axios from "axios";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import Grid from "@mui/material/Grid";
+import { useParams } from "next/navigation";
 
-async function getListing(id) {
-  const apiResponse = await fetch(
-    `${process.env.API_ENDPOINT}/listing/admin/${id}`,
-    {
-      cache: "no-store",
-    }
-  );
-  return apiResponse.json();
-}
+export default function Page() {
+  // const [posting, setPosting] = useState([]);
+  const [listing, setListing] = useState({
+    address: "",
+    city: "",
+    price: "",
+    description: "",
+    coverImage: "",
+    imageGallery: [],
+  });
 
-export default async function Page({ params }) {
-  const [listing, setListing] = useState(null);
-  const { id } = params;
+  const { id } = useParams();
+  console.log(id);
+  console.log({ listing });
+  // useEffect(() => {
+  //   const fetchListing = async () => {
+  //     try {
+  //       const response = await axios.get(
+  //         `${process.env.API_ENDPOINT}/listing/admin/${id}`
+  //       );
+  //       setPosting(response.data);
+  //       console.log(response.data);
+  //     } catch (err) {
+  //       console.log(err);
+  //     }
+  //   };
 
-  useEffect(() => {
-    async function fetchListing() {
-      const response = await getListing(id);
-      setListing(response.data);
-    }
-
-    fetchListing();
-  }, [id]);
+  //   fetchListing();
+  // }, [id]);
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -37,46 +45,36 @@ export default async function Page({ params }) {
   };
 
   const handleAddImage = () => {
-    setListing((prevListing) => ({
-      ...prevListing,
-      imageGallery: [...prevListing.imageGallery, ""],
-    }));
+    const imageGallery = [...listing.imageGallery, ""];
+    setListing({ ...listing, imageGallery });
   };
 
   const handleImageChange = (event, index) => {
     const { value } = event.target;
-    setListing((prevListing) => {
-      const updatedGallery = [...prevListing.imageGallery];
-      updatedGallery[index] = value;
-      return {
-        ...prevListing,
-        imageGallery: updatedGallery,
-      };
-    });
+    const imageGallery = [...listing.imageGallery];
+    imageGallery[index] = value;
+    setListing({ ...listing, imageGallery });
   };
 
-  const updateListing = async (listingId) => {
-    // Perform the update operation using the updated listing object
+  const updateListing = async (event) => {
+    event.preventDefault();
     try {
-      await axios.put(
-        `${process.env.API_ENDPOINT}/admin/${listingId}`,
-        listing
-      );
-      // Handle success or show a success message
+      await axios.put(`${process.env.API_ENDPOINT}/listing/update`, {
+        ...listing,
+      });
+      alert("Listing Edited");
     } catch (error) {
-      // Handle error or show an error message
+      console.error(error);
     }
   };
 
   if (!listing) {
     return <div>Loading...</div>; // Add a loading state while fetching the listing
   }
-  // const listing = await getListing(id);
 
   return (
     <main className="container-layout">
       <section>
-        <h4>{listing.address}</h4>
         <form>
           <TextField
             label="주소"
@@ -129,7 +127,7 @@ export default async function Page({ params }) {
             }}
           >
             <Button
-              type="submit"
+              type="button"
               variant="contained"
               size="large"
               onClick={handleAddImage}
@@ -144,13 +142,13 @@ export default async function Page({ params }) {
                 gap: "10px",
               }}
             >
-              {listing.data.imageGallery.map((imageGallery, index) => (
+              {listing.imageGallery.map((imageGallery, index) => (
                 <TextField
                   sx={{ width: "calc(50% - 5px)" }}
                   label="방 사진 링크"
                   key={index}
                   type="text"
-                  name="imageGallerys"
+                  name="imageGallery"
                   value={imageGallery}
                   onChange={(event) => handleImageChange(event, index)}
                 />
@@ -163,7 +161,7 @@ export default async function Page({ params }) {
             variant="contained"
             size="large"
             color="success"
-            onClick={() => updateListing(listing.data._id)}
+            onClick={() => updateListing()}
           >
             리스팅 수정 업데이트
           </Button>

@@ -84,18 +84,30 @@ router.put("/update", async (req, res) => {
   const id = req.body.id;
 
   try {
-    const updatedListing = await ListingModel.findByIdAndUpdate(
-      id,
-      updatedData,
-      { new: true }
-    );
-    if (!updatedListing) {
+    const listing = await ListingModel.findById(id);
+
+    if (!listing) {
       return res
         .status(404)
         .json({ success: false, message: "Listing not found" });
     }
 
-    return res.status(200).json({ success: true, data: updatedListing });
+    // Update the listing with the updatedData
+    listing.address = updatedData.address;
+    listing.city = updatedData.city;
+    listing.price = updatedData.price;
+    listing.description = updatedData.description;
+    listing.coverImage = updatedData.coverImage;
+    listing.imageGallery = updatedData.imageGallery;
+
+    // Save the updated listing
+    const updatedListing = await listing.save();
+
+    res.status(200).json({
+      success: true,
+      message: "Listing updated successfully",
+      data: updatedListing,
+    });
   } catch (error) {
     console.log(error);
     return res
