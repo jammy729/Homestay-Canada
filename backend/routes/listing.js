@@ -91,6 +91,7 @@ router.put("/update", async (req, res) => {
         .status(404)
         .json({ success: false, message: "Listing not found" });
     }
+    const updatedImageGallery = [...updatedData.imageGallery];
 
     // Update the listing with the updatedData
     listing.address = updatedData.address;
@@ -98,7 +99,7 @@ router.put("/update", async (req, res) => {
     listing.price = updatedData.price;
     listing.description = updatedData.description;
     listing.coverImage = updatedData.coverImage;
-    listing.imageGallery = updatedData.imageGallery;
+    listing.imageGallery = updatedImageGallery;
 
     // Save the updated listing
     const updatedListing = await listing.save();
