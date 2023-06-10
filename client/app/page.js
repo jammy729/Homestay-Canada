@@ -8,9 +8,8 @@ async function getListing() {
 }
 export default async function Page() {
   const listing = await getListing();
-  if (!listing) {
-    return <div>Loading...</div>; // Add a loading state while fetching the listing
-  }
+
+  console.log(listing.length);
   return (
     <main>
       {/* GREETINGS */}
@@ -27,21 +26,25 @@ export default async function Page() {
 
       {/* LISTINGS  */}
       <section className="listings two_column container-full-layout">
-        {listing.map((data, dataIndex) => (
-          <ListingGallery
-            key={dataIndex}
-            id={data._id}
-            address={data.address}
-            city={data.city}
-            price={data.price}
-            coverImage={
-              data.coverImage ||
-              (data.imageGallery.length > 0
-                ? data.imageGallery[0]
-                : data.imageGallery[1])
-            }
-          />
-        ))}
+        {listing.length === 0 ? (
+          <p>No results found</p>
+        ) : (
+          listing.map((data, dataIndex) => (
+            <ListingGallery
+              key={dataIndex}
+              id={data._id}
+              address={data.address}
+              city={data.city}
+              price={data.price}
+              coverImage={
+                data.coverImage ||
+                (data.imageGallery.length > 0
+                  ? data.imageGallery[0]
+                  : data.imageGallery[1])
+              }
+            />
+          ))
+        )}
       </section>
     </main>
   );
