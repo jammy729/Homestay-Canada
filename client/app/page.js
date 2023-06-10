@@ -8,7 +8,9 @@ async function getListing() {
 }
 export default async function Page() {
   const listing = await getListing();
-
+  if (!listing) {
+    return <div>Loading...</div>; // Add a loading state while fetching the listing
+  }
   return (
     <main>
       {/* GREETINGS */}
