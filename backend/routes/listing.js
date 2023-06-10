@@ -39,8 +39,7 @@ router.get("/city", async (req, res) => {
 router.get("/detail", async (req, res) => {
   const address = req.query.address;
   const id = req.query.id;
-  const area = req.query.area;
-  ListingModel.findOne({ address: address, _id: id, city: area })
+  ListingModel.findOne({ address: address, _id: id })
     .then(function (result) {
       res.send(result);
     })

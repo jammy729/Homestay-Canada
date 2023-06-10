@@ -8,8 +8,7 @@ export default async function Page() {
   const searchParams = useSearchParams();
   const address = searchParams.get("address");
   const id = searchParams.get("id");
-  const area = searchParams.get("area")
-  const data = await getListing(address, id, area);
+  const data = await getListing(address, id);
 
   return (
     <main id="listings-detail">
@@ -62,12 +61,12 @@ export default async function Page() {
   );
 }
 
-async function getListing(address, id, area) {
+async function getListing(address, id, city) {
   const url = `${
     process.env.API_ENDPOINT
   }/listing/detail?address=${encodeURIComponent(
     address
-  )}&id=${encodeURIComponent(id)}&area=${encodeURIComponent(area)}`;
+  )}&id=${encodeURIComponent(id)}`;
 
   const apiResponse = await fetch(url, {
     cache: "no-store",
