@@ -39,7 +39,7 @@ export default async function Page() {
   const [open, setOpen] = useState(false);
 
   const listing = await getListing();
-  console.log();
+
   const deleteListing = (id) => {
     axios.delete(`${process.env.API_ENDPOINT}/listing/delete/${id}`);
     handleClick();
@@ -78,6 +78,7 @@ export default async function Page() {
                     수정
                   </Button>
                   <Button
+                    type="submit"
                     variant="contained"
                     color="error"
                     endIcon={<AiFillDelete />}

@@ -1,11 +1,12 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import axios from "axios";
-import Button from "@mui/material/Button";
-import TextField from "@mui/material/TextField";
-import Grid from "@mui/material/Grid";
 
 // PLUGINS
+import Button from "@mui/material/Button";
+import TextField from "@mui/material/TextField";
+import DeleteIcon from "@mui/icons-material/Delete";
+import AddIcon from "@mui/icons-material/Add";
 
 export default function Page() {
   const [listing, setListing] = useState({
@@ -20,6 +21,15 @@ export default function Page() {
   const handleChange = (event) => {
     const { name, value } = event.target;
     setListing({ ...listing, [name]: value });
+  };
+
+  const handleRemoveImage = () => {
+    const imageGallery = [...listing.imageGallery];
+    imageGallery.pop();
+    setListing((prevListing) => ({
+      ...prevListing,
+      imageGallery,
+    }));
   };
 
   const handleImageChange = (event, index) => {
@@ -91,43 +101,44 @@ export default function Page() {
             onChange={handleChange}
           />
 
-          <Grid
-            sx={{
-              display: "flex",
-              flexWarp: "wrap",
-              flexDirection: "column",
-              gap: "10px",
-            }}
-          >
-            <Button
-              type="submit"
-              onClick={handleAddImage}
-              variant="contained"
-              size="large"
-            >
-              사진 더하기
-            </Button>
-            <Grid
-              sx={{
-                display: "flex",
-                width: "100%",
-                flexWrap: "wrap",
-                gap: "10px",
-              }}
-            >
+          <div className="imageGallery_container">
+            <div className="btn_container">
+              <Button
+                startIcon={<AddIcon />}
+                type="button"
+                variant="contained"
+                size="large"
+                onClick={handleAddImage}
+              >
+                사진 더하기
+              </Button>
+              <Button
+                startIcon={<DeleteIcon />}
+                type="button"
+                variant="contained"
+                size="large"
+                color="error"
+                onClick={handleRemoveImage}
+              >
+                사진 지우기
+              </Button>
+            </div>
+            <div className="imageGallery_field">
               {listing.imageGallery.map((imageGallery, index) => (
                 <TextField
-                  sx={{ width: "calc(50% - 5px)" }}
                   label="방 사진 링크"
                   key={index}
+                  multiline
+                  required
                   type="text"
-                  name="imageGallerys"
+                  name="imageGallery"
+                  helperText="사진은 이 링크: https://postimages.org/ 에서 업로드 하시기 바랍니다"
                   value={imageGallery}
                   onChange={(event) => handleImageChange(event, index)}
                 />
               ))}
-            </Grid>
-          </Grid>
+            </div>
+          </div>
 
           <Button
             type="submit"

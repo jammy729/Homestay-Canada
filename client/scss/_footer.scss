@@ -64,5 +64,8 @@ footer {
   }
 }
 section.footer_end {
-  padding: 70px 0 140px 0;
+  padding: 70px 0 50px 0;
+  @media (min-width: $screen-md) {
+    padding: 70px 0 140px 0;
+  }
 }

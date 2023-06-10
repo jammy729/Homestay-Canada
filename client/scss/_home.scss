@@ -4,6 +4,8 @@ main {
     display: flex;
     flex-direction: column;
     flex-wrap: wrap;
+    gap: 20px;
+
     @media only screen and (min-width: $screen-md-min) {
       flex-direction: row;
       gap: 10px;

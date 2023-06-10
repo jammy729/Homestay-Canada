@@ -1,13 +1,17 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+
+// PLUGINS
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
-import Grid from "@mui/material/Grid";
-import { useParams } from "next/navigation";
+import DeleteIcon from "@mui/icons-material/Delete";
+import AddIcon from "@mui/icons-material/Add";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import { useParams, useRouter } from "next/navigation";
 
 export default function Page() {
-  // const [posting, setPosting] = useState([]);
+  const [fetchedData, setFetchedData] = useState(null);
   const [listing, setListing] = useState({
     address: "",
     city: "",
@@ -18,23 +22,25 @@ export default function Page() {
   });
 
   const { id } = useParams();
-  console.log(id);
-  console.log({ listing });
-  // useEffect(() => {
-  //   const fetchListing = async () => {
-  //     try {
-  //       const response = await axios.get(
-  //         `${process.env.API_ENDPOINT}/listing/admin/${id}`
-  //       );
-  //       setPosting(response.data);
-  //       console.log(response.data);
-  //     } catch (err) {
-  //       console.log(err);
-  //     }
-  //   };
+  const router = useRouter();
 
-  //   fetchListing();
-  // }, [id]);
+  useEffect(() => {
+    axios
+      .get(`${process.env.API_ENDPOINT}/listing/admin/${id}`)
+      .then((response) => {
+        const fetchedListing = response.data;
+        setFetchedData(fetchedListing);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }, [id]);
+
+  useEffect(() => {
+    if (fetchedData) {
+      setListing(fetchedData.data);
+    }
+  }, [fetchedData]);
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -49,6 +55,15 @@ export default function Page() {
     setListing({ ...listing, imageGallery });
   };
 
+  const handleRemoveImage = () => {
+    const imageGallery = [...listing.imageGallery];
+    imageGallery.pop();
+    setListing((prevListing) => ({
+      ...prevListing,
+      imageGallery,
+    }));
+  };
+
   const handleImageChange = (event, index) => {
     const { value } = event.target;
     const imageGallery = [...listing.imageGallery];
@@ -56,16 +71,17 @@ export default function Page() {
     setListing({ ...listing, imageGallery });
   };
 
-  const updateListing = async (event) => {
+  const updateListing = (event) => {
     event.preventDefault();
-    try {
-      await axios.put(`${process.env.API_ENDPOINT}/listing/update`, {
-        ...listing,
+    axios
+      .put(`${process.env.API_ENDPOINT}/listing/update`, { ...listing, id })
+      .then(() => {
+        alert("Listing Edited");
+      })
+      .catch((error) => {
+        console.error(error);
       });
-      alert("Listing Edited");
-    } catch (error) {
-      console.error(error);
-    }
+    router.push("/admin/dashboard");
   };
 
   if (!listing) {
@@ -74,13 +90,28 @@ export default function Page() {
 
   return (
     <main className="container-layout">
+      <section className="page_history" style={{ marginBottom: "30px" }}>
+        <Button
+          aria-label="back"
+          startIcon={<ArrowBackIcon />}
+          onClick={() => router.back()}
+        >
+          뒤로 가기
+        </Button>
+      </section>
+
       <section>
-        <form>
+        <div style={{ marginBottom: "20px" }}>
+          <h4>ID: {listing._id}</h4>
+        </div>
+
+        <form className="listing_form">
           <TextField
             label="주소"
             type="text"
             id="address"
             name="address"
+            required
             value={listing.address}
             onChange={handleInputChange}
           />
@@ -89,15 +120,17 @@ export default function Page() {
             type="text"
             id="city"
             name="city"
+            required
             value={listing.city}
             onChange={handleInputChange}
           ></TextField>
-
           <TextField
             label="가격 $"
             type="text"
             id="price"
             name="price"
+            helperText="ex. 1200, 연락주세요"
+            required
             value={listing.price}
             onChange={handleInputChange}
           ></TextField>
@@ -106,6 +139,9 @@ export default function Page() {
             type="text"
             id="description"
             name="description"
+            required
+            rows={4}
+            multiline
             value={listing.description}
             onChange={handleInputChange}
           />
@@ -114,54 +150,56 @@ export default function Page() {
             type="text"
             id="coverImage"
             name="coverImage"
+            multiline
+            required
+            helperText="사진은 이 링크: https://postimages.org/ 에서 업로드 하시기 바랍니다"
             value={listing.coverImage}
             onChange={handleInputChange}
           />
-
-          <Grid
-            sx={{
-              display: "flex",
-              flexWarp: "wrap",
-              flexDirection: "column",
-              gap: "10px",
-            }}
-          >
-            <Button
-              type="button"
-              variant="contained"
-              size="large"
-              onClick={handleAddImage}
-            >
-              사진 더하기
-            </Button>
-            <Grid
-              sx={{
-                display: "flex",
-                width: "100%",
-                flexWrap: "wrap",
-                gap: "10px",
-              }}
-            >
+          <div className="imageGallery_container">
+            <div className="btn_container">
+              <Button
+                startIcon={<AddIcon />}
+                type="button"
+                variant="contained"
+                size="large"
+                onClick={handleAddImage}
+              >
+                사진 더하기
+              </Button>
+              <Button
+                startIcon={<DeleteIcon />}
+                type="button"
+                variant="contained"
+                size="large"
+                color="error"
+                onClick={handleRemoveImage}
+              >
+                사진 지우기
+              </Button>
+            </div>
+            <div className="imageGallery_field">
               {listing.imageGallery.map((imageGallery, index) => (
                 <TextField
-                  sx={{ width: "calc(50% - 5px)" }}
                   label="방 사진 링크"
                   key={index}
+                  multiline
+                  required
                   type="text"
                   name="imageGallery"
+                  helperText="사진은 이 링크: https://postimages.org/ 에서 업로드 하시기 바랍니다"
                   value={imageGallery}
                   onChange={(event) => handleImageChange(event, index)}
                 />
               ))}
-            </Grid>
-          </Grid>
-
+            </div>
+          </div>
           <Button
             type="submit"
             variant="contained"
             size="large"
             color="success"
-            onClick={() => updateListing()}
+            onClick={updateListing}
           >
             리스팅 수정 업데이트
           </Button>
