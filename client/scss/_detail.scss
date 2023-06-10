@@ -19,14 +19,28 @@ main#listings-detail {
       gap: 10px;
       justify-content: center;
       cursor: pointer;
+      margin-bottom: 2rem;
       .img_gallery {
+        height: 100%;
+        img.img_gallery_thumbnails {
+          filter: brightness(100%);
+          transition: all 0.5s ease;
+          &:hover {
+            filter: brightness(50%);
+            transition: all 0.5s ease;
+          }
+        }
+
         @media only screen and (min-width: $screen-sm-min) {
+          height: 15rem;
           width: calc(50% - 10px);
         }
         @media only screen and (min-width: $screen-md-min) {
+          height: 16rem;
           width: calc(33.33333% - 10px);
         }
         @media only screen and (min-width: $screen-lg-min) {
+          height: 18rem;
           width: calc(25% - 10px);
         }
       }

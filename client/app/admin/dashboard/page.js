@@ -49,57 +49,62 @@ export default async function Page() {
     <React.Fragment>
       <section className="container-fluid listing">
         <div className="listing_container">
-          {listing.map((listingData, dataIndex) => (
-            <div className="listings_img_container" key={dataIndex}>
-              <div className="thumbnail">
-                <Image
-                  src={listingData.coverImage}
-                  width={1080}
-                  height={800}
-                  alt={listingData.address}
-                />
-              </div>
-              <div className="listing_detail">
-                <h3>ID: {listingData._id}</h3>
-                <h3>Address: {listingData.address}</h3>
-                <h3>City: {listingData.city}</h3>
-                <h3>Price: {detectStringType(listingData.price)}</h3>
-              </div>
-              <div className="cta">
-                <Stack
-                  spacing={2}
-                  sx={{ justifyContent: "center", height: "100%" }}
-                >
-                  <Button
-                    variant="contained"
-                    endIcon={<AiFillEdit />}
-                    href={`/admin/${listingData._id}`}
-                  >
-                    수정
-                  </Button>
-                  <Button
-                    type="submit"
-                    variant="contained"
-                    color="error"
-                    endIcon={<AiFillDelete />}
-                    onClick={() => deleteListing(listingData._id)}
-                  >
-                    지우기
-                  </Button>
-                  <Snackbar
-                    open={open}
-                    severity="success"
-                    autoHideDuration={6000}
-                    onClose={handleClose}
-                    message="리스팅 지워졌습니다"
-                    action={action}
+          {listing.length === 0 ? (
+            <p>No Results found</p>
+          ) : (
+            listing.map((listingData, dataIndex) => (
+              <div className="listings_img_container" key={dataIndex}>
+                <div className="thumbnail">
+                  <Image
+                    src={listingData.coverImage}
+                    width={1080}
+                    height={800}
+                    alt={listingData.address}
                   />
-                </Stack>
+                </div>
+                <div className="listing_detail">
+                  <h3>ID: {listingData._id}</h3>
+                  <h3>Address: {listingData.address}</h3>
+                  <h3>City: {listingData.city}</h3>
+                  <h3>Price: {detectStringType(listingData.price)}</h3>
+                </div>
+                <div className="cta">
+                  <Stack
+                    spacing={2}
+                    sx={{ justifyContent: "center", height: "100%" }}
+                  >
+                    <Button
+                      variant="contained"
+                      endIcon={<AiFillEdit />}
+                      href={`/admin/${listingData._id}`}
+                    >
+                      수정
+                    </Button>
+                    <Button
+                      type="submit"
+                      variant="contained"
+                      color="error"
+                      endIcon={<AiFillDelete />}
+                      onClick={() => deleteListing(listingData._id)}
+                    >
+                      지우기
+                    </Button>
+                    <Snackbar
+                      open={open}
+                      severity="success"
+                      autoHideDuration={6000}
+                      onClose={handleClose}
+                      message="리스팅 지워졌습니다"
+                      action={action}
+                    />
+                  </Stack>
+                </div>
               </div>
-            </div>
-          ))}
+            ))
+          )}
         </div>
       </section>
+      
     </React.Fragment>
   );
 }

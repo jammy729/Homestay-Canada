@@ -140,7 +140,7 @@ export default function Page() {
             id="description"
             name="description"
             required
-            rows={4}
+            rows={8}
             multiline
             value={listing.description}
             onChange={handleInputChange}

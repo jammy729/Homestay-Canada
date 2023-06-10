@@ -27,7 +27,7 @@ export default async function Page() {
       {/* LISTINGS  */}
       <section className="listings two_column container-full-layout">
         {listing.length === 0 ? (
-          <p>No results found</p>
+          <div className="container-layout">No results found</div>
         ) : (
           listing.map((data, dataIndex) => (
             <ListingGallery
