@@ -123,7 +123,7 @@ const footer = () => {
 
         <div id="footer_menu">
           <h4 style={{ fontWeight: "bold" }}>메뉴</h4>
-          <Link href="/rooms">방보기</Link>
+          <Link href="/rooms">방 보기</Link>
           <Link href="/information">안내</Link>
           <Link href="/faq">공지사항</Link>
           <Link href="/contact">문의</Link>
@@ -199,7 +199,7 @@ const footer = () => {
         </div>
       </section>
       <section className="footer_end">
-        &copy;{year} 홈스테이 캐나다 Homestay Canada.
+        <p>&copy;{year} 홈스테이 캐나다 Homestay Canada</p>
       </section>
     </footer>
   );

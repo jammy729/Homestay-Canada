@@ -12,7 +12,7 @@ async function getListing(city) {
   if (city && city !== "All") {
     apiEndpoint += `?city=${encodeURIComponent(city)}`;
   }
-  console.log("API Endpoint:", apiEndpoint); // Log the API endpoint
+  console.log("API Endpoint:", apiEndpoint); 
   const apiResponse = await fetch(apiEndpoint);
   return apiResponse.json();
 }
@@ -39,7 +39,6 @@ export default function Page() {
           console.error("Failed to fetch data:", error);
         });
     } else {
-      // Fetch all listings if no city is filtered
       getListing()
         .then((data) => {
           setListing(data);
@@ -52,12 +51,10 @@ export default function Page() {
     const fetchData = async () => {
       const listing = await getListing(selectedCity);
       console.log(listing.address);
-      // Update the state or perform other actions with the fetched listing data
     };
 
     fetchData();
 
-    // Update the URL parameter when a different city is selected
     const url = new URL(window.location.href);
     if (selectedCity === "All") {
       url.searchParams.delete("city");
@@ -94,7 +91,9 @@ export default function Page() {
 
       <section className="listings two_column container-full-layout">
         {noResultsFound ? (
-          <p>No results found</p>
+          <div className="container-layout">
+            <p>No results found</p>
+          </div>
         ) : (
           listing.map((data, dataIndex) => (
             <ListingGallery

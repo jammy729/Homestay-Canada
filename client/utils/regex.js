@@ -1,3 +1,5 @@
+
+
 export default function detectStringType(input) {
   const numberRegex = /^\d+$/;
   const letterRegex = /^[a-zA-Z\s]+$/;
