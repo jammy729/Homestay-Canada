@@ -17,7 +17,6 @@ export default async function Page() {
     .filter((areaData) => areaData._id !== id)
     .slice(0, 3);
 
-  console.log({ similarListings });
   return (
     <main id="listings-detail">
       <section className="cover_image_container container-full-layout">

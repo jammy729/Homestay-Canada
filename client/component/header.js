@@ -7,8 +7,8 @@ import { usePathname, useRouter } from "next/navigation";
 import Logo from "./logo";
 const navbarItems = [
   { path: "/rooms", name: "방 보기" },
-  // { path: "/information", name: "안내" },
-  // { path: "/faq", name: "공지사항" },
+  { path: "/rooms/rental", name: "렌탈" },
+  { path: "/rooms/homestay", name: "홈 스테이" },
   { path: "/contact", name: "문의" },
 ];
 

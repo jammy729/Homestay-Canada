@@ -5,6 +5,11 @@ const ListingSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  accommodationType: {
+    type: String,
+    enum: ["rental", "homestay"],
+    required: true,
+  },
   city: {
     type: String,
     required: true,
@@ -27,6 +32,7 @@ const ListingSchema = new mongoose.Schema({
       required: true,
     },
   ],
+
   date: { type: Date, default: Date.now },
 });
 

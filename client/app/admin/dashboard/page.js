@@ -7,42 +7,24 @@ import Image from "next/image";
 import { AiFillEdit, AiFillDelete } from "react-icons/ai";
 import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
-import Snackbar from "@mui/material/Snackbar";
 import detectStringType from "@/utils/regex";
-
-const handleClick = () => {
-  setOpen(true);
-};
-
-const handleClose = (event, reason) => {
-  if (reason === "clickaway") {
-    return;
-  }
-
-  setOpen(false);
-};
-
-const action = (
-  <>
-    <Button color="secondary" size="small" onClick={handleClose}>
-      UNDO
-    </Button>
-  </>
-);
 
 async function getListing() {
   const apiResponse = await fetch(`${process.env.API_ENDPOINT}/listing`);
+  if (!apiResponse.ok) {
+    // This will activate the closest `error.js` Error Boundary
+    throw new Error("Failed to fetch data");
+  }
   return apiResponse.json();
 }
 
 export default async function Page() {
-  const [open, setOpen] = useState(false);
-
   const listing = await getListing();
-
+  console.log(listing.length);
   const deleteListing = (id) => {
     axios.delete(`${process.env.API_ENDPOINT}/listing/delete/${id}`);
-    handleClick();
+    alert("Listing Deleted");
+    router.push("/admin/dashboard");
   };
 
   return (
@@ -89,14 +71,6 @@ export default async function Page() {
                     >
                       지우기
                     </Button>
-                    <Snackbar
-                      open={open}
-                      severity="success"
-                      autoHideDuration={6000}
-                      onClose={handleClose}
-                      message="리스팅 지워졌습니다"
-                      action={action}
-                    />
                   </Stack>
                 </div>
               </div>
@@ -104,7 +78,6 @@ export default async function Page() {
           )}
         </div>
       </section>
-      
     </React.Fragment>
   );
 }

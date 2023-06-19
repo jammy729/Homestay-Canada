@@ -1,8 +1,15 @@
 import React from "react";
 import Link from "next/link";
 import detectStringType from "@/utils/regex";
-
-const ListingGallery = ({ address, id, city, price, coverImage }) => {
+import Image from "next/image";
+const ListingGallery = ({
+  address,
+  id,
+  city,
+  price,
+  coverImage,
+  accommodationType,
+}) => {
   return (
     <div className="listings_img_container">
       <Link
@@ -10,17 +17,15 @@ const ListingGallery = ({ address, id, city, price, coverImage }) => {
           address
         )}&id=${encodeURIComponent(id)}`}
       >
-        <div
-          className="hover_image listings_img"
-          style={{
-            backgroundImage: `url(${coverImage})`,
-          }}
-        >
-          <div className="overlay dark" style={{ zIndex: "1" }}></div>
-          <div className="listing_content" style={{ zIndex: "2" }}>
-            <h4>{address}</h4>
-            <h4>{city}</h4>
-            <h4>{detectStringType(price)}</h4>
+        <div className="listing">
+          <div className="listing_image">
+            <Image src={`${coverImage}`} width={1080} height={800}></Image>
+          </div>
+          <div className="listing_content">
+            <h5 id="address">{address}</h5>
+            <h5 id="city">{city}</h5>
+            <h5 id="price">{detectStringType(price)}</h5>
+            <h5 id="accommodation">{accommodationType}</h5>
           </div>
         </div>
       </Link>

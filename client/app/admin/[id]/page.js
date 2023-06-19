@@ -1,6 +1,7 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { useParams, useRouter } from "next/navigation";
 
 // PLUGINS
 import Button from "@mui/material/Button";
@@ -8,7 +9,10 @@ import TextField from "@mui/material/TextField";
 import DeleteIcon from "@mui/icons-material/Delete";
 import AddIcon from "@mui/icons-material/Add";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import { useParams, useRouter } from "next/navigation";
+import Radio from "@mui/material/Radio";
+import RadioGroup from "@mui/material/RadioGroup";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import FormLabel from "@mui/material/FormLabel";
 
 export default function Page() {
   const [fetchedData, setFetchedData] = useState(null);
@@ -19,7 +23,12 @@ export default function Page() {
     description: "",
     coverImage: "",
     imageGallery: [],
+    accommodationType: "",
   });
+  const accommodationTypes = [
+    { value: "rental", label: "Rental" },
+    { value: "homestay", label: "Homestay" },
+  ];
 
   const { id } = useParams();
   const router = useRouter();
@@ -115,6 +124,23 @@ export default function Page() {
             value={listing.address}
             onChange={handleInputChange}
           />
+          <FormLabel>Accommodation Type</FormLabel>
+          <RadioGroup
+            row
+            aria-labelledby="accommodation type"
+            name="accommodationType"
+            value={listing.accommodationType}
+            onChange={handleInputChange}
+          >
+            {accommodationTypes.map((data, dataKey) => (
+              <FormControlLabel
+                key={dataKey}
+                value={data.value}
+                control={<Radio />}
+                label={data.label}
+              />
+            ))}
+          </RadioGroup>
           <TextField
             label="도시"
             type="text"

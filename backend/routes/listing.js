@@ -4,7 +4,6 @@ const mongoose = require("mongoose");
 
 const router = express.Router();
 
-// main .get 6
 router.get("/", async (req, res) => {
   try {
     const result = await ListingModel.find({}).sort({ date: -1 }).limit(4);
@@ -28,6 +27,37 @@ router.get("/city", async (req, res) => {
     if (city) {
       query = { city };
     }
+    const result = await ListingModel.find(query).sort({ date: -1 }).limit();
+    res.status(200).json(result);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
+router.get("/rental", async (req, res) => {
+  try {
+    const city = req.query.city;
+    const query = { accommodationType: "rental" };
+
+    if (city && city !== "All") {
+      query.city = city;
+    }
+
+    const result = await ListingModel.find(query).sort({ date: -1 }).limit();
+    res.status(200).json(result);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
+router.get("/homestay", async (req, res) => {
+  try {
+    const city = req.query.city;
+    const query = { accommodationType: "homestay" };
+
+    if (city && city !== "All") {
+      query.city = city;
+    }
 
     const result = await ListingModel.find(query).sort({ date: -1 }).limit();
     res.status(200).json(result);
@@ -39,13 +69,13 @@ router.get("/city", async (req, res) => {
 router.get("/detail", async (req, res) => {
   const address = req.query.address;
   const id = req.query.id;
-  ListingModel.findOne({ address: address, _id: id })
-    .then(function (result) {
-      res.send(result);
-    })
-    .catch(function (err) {
-      res.status(400).json({ success: false });
-    });
+
+  try {
+    const result = await ListingModel.findOne({ address: address, _id: id });
+    res.status(200).json(result);
+  } catch (err) {
+    res.status(400).json({ success: false });
+  }
 });
 
 // Create a new recipe
@@ -58,6 +88,7 @@ router.post("/", async (req, res) => {
     description: req.body.description,
     coverImage: req.body.coverImage,
     imageGallery: req.body.imageGallery,
+    accommodationType: req.body.accommodationType,
   });
 
   try {
@@ -71,10 +102,10 @@ router.post("/", async (req, res) => {
         coverImage: result.coverImage,
         imageGallery: result.imageGallery,
         _id: result._id,
+        accommodationType: req.body.accommodationType,
       },
     });
   } catch (err) {
-    // console.log(err);
     res.status(500).json(err);
   }
 });
@@ -93,15 +124,14 @@ router.put("/update", async (req, res) => {
     }
     const updatedImageGallery = [...updatedData.imageGallery];
 
-    // Update the listing with the updatedData
     listing.address = updatedData.address;
     listing.city = updatedData.city;
     listing.price = updatedData.price;
     listing.description = updatedData.description;
     listing.coverImage = updatedData.coverImage;
     listing.imageGallery = updatedImageGallery;
+    listing.accommodationType = updatedData.accommodationType;
 
-    // Save the updated listing
     const updatedListing = await listing.save();
 
     res.status(200).json({
@@ -131,8 +161,13 @@ router.get("/admin/:id", async (req, res) => {
 
 router.delete("/delete/:id", async (req, res) => {
   const id = req.params.id;
-  await ListingModel.findByIdAndRemove(id).exec();
-  res.send("Deleted");
+
+  try {
+    await ListingModel.findByIdAndRemove(id).exec();
+    res.send("Deleted");
+  } catch (err) {
+    res.status(500).json(err);
+  }
 });
 
 module.exports = router;

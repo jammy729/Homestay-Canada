@@ -36,6 +36,7 @@ export default async function Page() {
               address={data.address}
               city={data.city}
               price={data.price}
+              accommodationType={data.accommodationType}
               coverImage={
                 data.coverImage ||
                 (data.imageGallery.length > 0

@@ -7,3 +7,33 @@
     }
   }
 }
+
+section.header {
+  h2 {
+    text-align: center;
+    font-weight: 500;
+    margin-bottom: 1rem;
+  }
+  .btn_group {
+    margin-bottom: 1.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    @media (min-width: $screen-md) {
+      flex-direction: row;
+    }
+    a {
+      width: 100%;
+      @media (min-width: $screen-sm) {
+        width: unset;
+      }
+    }
+    .btn {
+      width: 100%;
+      @media (min-width: $screen-md) {
+        width: 25%;
+      }
+    }
+  }
+}

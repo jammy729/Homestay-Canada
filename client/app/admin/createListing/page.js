@@ -10,6 +10,11 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import AddIcon from "@mui/icons-material/Add";
 import MenuItem from "@mui/material/MenuItem";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import Radio from "@mui/material/Radio";
+import RadioGroup from "@mui/material/RadioGroup";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import FormLabel from "@mui/material/FormLabel";
+import FormControl from "@mui/material/FormControl";
 
 export default function Page() {
   const router = useRouter();
@@ -21,8 +26,13 @@ export default function Page() {
     description: "",
     coverImage: "",
     imageGallery: [],
+    accommodationType: "",
   });
 
+  const accommodationTypes = [
+    { value: "rental", label: "Rental" },
+    { value: "homestay", label: "Homestay" },
+  ];
   console.log({ listing });
 
   const handleChange = (event) => {
@@ -86,6 +96,23 @@ export default function Page() {
             value={listing.address}
             onChange={handleChange}
           />
+          <FormLabel>Accommodation Type</FormLabel>
+          <RadioGroup
+            row
+            aria-labelledby="accommodation type"
+            name="accommodationType"
+            value={listing.accommodationType}
+            onChange={handleChange}
+          >
+            {accommodationTypes.map((data, dataKey) => (
+              <FormControlLabel
+                key={dataKey}
+                value={data.value}
+                control={<Radio />}
+                label={data.label}
+              />
+            ))}
+          </RadioGroup>
           <TextField
             required
             label="도시"
@@ -120,6 +147,7 @@ export default function Page() {
             type="text"
             id="coverImage"
             name="coverImage"
+            required
             helperText="사진은 이 링크: https://postimages.org/ 에서 업로드 하시기 바랍니다"
             value={listing.coverImage}
             onChange={handleChange}

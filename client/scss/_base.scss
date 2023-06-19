@@ -143,17 +143,26 @@ a {
 
 a.btn,
 div.btn {
-  margin: 3px;
+  margin: 5px;
   cursor: pointer;
   box-sizing: border-box;
   text-align: center;
   text-decoration: none;
   text-transform: uppercase;
   min-width: 10rem;
-  padding: 0.53rem 0.55555rem;
+  padding: 0.6rem;
+  border-radius: 4px;
+
   &.primary {
-    background-color: #fff;
-    color: #090909;
+    background-color: rgb(74, 74, 75);
+    color: #fff;
+    transition: 0.15s ease-in-out;
+
+    &:hover {
+      transition: 0.15s ease-in-out;
+
+      background-color: rgb(107, 107, 109);
+    }
   }
 
   &.secondary {

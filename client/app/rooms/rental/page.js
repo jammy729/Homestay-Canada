@@ -1,7 +1,5 @@
 "use client";
-import Link from "next/link";
 import React, { useState, useEffect } from "react";
-import { useSearchParams } from "next/navigation";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
@@ -9,7 +7,7 @@ import Select from "@mui/material/Select";
 import ListingGallery from "@/component/listingGallery";
 
 async function getListing(city) {
-  let apiEndpoint = `${process.env.API_ENDPOINT}/listing/city`;
+  let apiEndpoint = `${process.env.API_ENDPOINT}/listing/rental`;
   if (city && city !== "All") {
     apiEndpoint += `?city=${encodeURIComponent(city)}`;
   }
@@ -19,11 +17,7 @@ async function getListing(city) {
 }
 
 export default function Page() {
-  const query = useSearchParams();
-  const cityquery = query.get("city");
-  console.log(cityquery);
-  const [selectedCity, setSelectedCity] = useState(cityquery || "All");
-
+  const [selectedCity, setSelectedCity] = useState("All");
   const [listing, setListing] = useState([]);
   const [noResultsFound, setNoResultsFound] = useState(false);
 
@@ -34,28 +28,14 @@ export default function Page() {
   const cities = ["Surrey", "Burnaby"];
 
   useEffect(() => {
-    if (selectedCity) {
-      getListing(selectedCity)
-        .then((data) => {
-          setListing(data);
-          setNoResultsFound(data.length === 0);
-        })
-        .catch((error) => {
-          console.error("Failed to fetch data:", error);
-        });
-    } else {
-      getListing()
-        .then((data) => {
-          setListing(data);
-          setNoResultsFound(data.length === 0);
-        })
-        .catch((error) => {
-          console.error("Failed to fetch data:", error);
-        });
-    }
     const fetchData = async () => {
-      const listing = await getListing(selectedCity);
-      console.log(listing.address);
+      try {
+        const data = await getListing(selectedCity);
+        setListing(data);
+        setNoResultsFound(data.length === 0);
+      } catch (error) {
+        console.error("Failed to fetch data:", error);
+      }
     };
 
     fetchData();
@@ -73,15 +53,7 @@ export default function Page() {
     <main>
       {/* City Filter Buttons */}
       <section className="header container-layout">
-        <h2>방보기 - View Listings</h2>
-        <div className="btn_group">
-          <Link href="/rooms/rental">
-            <div className="btn primary">렌탈 방 보기</div>
-          </Link>
-          <Link href="/rooms/homestay">
-            <div className="btn primary">홈 스테이 방 보기</div>
-          </Link>
-        </div>
+        <h2>렌탈 - rental</h2>
       </section>
       <section className="city_filter container-layout">
         <FormControl className="city_filter_form">
@@ -104,17 +76,16 @@ export default function Page() {
       </section>
 
       {/* LISTINGS */}
-      <section className="listings two_column container-full-layout">
-        {noResultsFound ? (
-          <div className="container-layout">
-            <p>No results found</p>
-          </div>
-        ) : (
-          listing.map((data, dataIndex) => (
+      {noResultsFound ? (
+        <div className="container-layout">
+          <p>No results found</p>
+        </div>
+      ) : (
+        <section className="listings two_column container-full-layout">
+          {listing.map((data, dataIndex) => (
             <ListingGallery
               key={dataIndex}
               address={data.address}
-              accommodationType={data.accommodationType}
               id={data._id}
               city={data.city}
               price={data.price}
@@ -125,9 +96,9 @@ export default function Page() {
                   : data.imageGallery[1])
               }
             />
-          ))
-        )}
-      </section>
+          ))}
+        </section>
+      )}
     </main>
   );
 }
