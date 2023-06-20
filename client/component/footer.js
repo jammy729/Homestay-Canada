@@ -96,7 +96,9 @@ const footer = () => {
         <div id="footer_menu">
           <h4 style={{ fontWeight: "bold" }}>메뉴</h4>
           {navbarItems.map((data) => (
-            <Link href={`${data.path}`}>{data.name}</Link>
+            <Link href={`${data.path}`}>
+              <p>{data.name}</p>
+            </Link>
           ))}
         </div>
 
