@@ -17,6 +17,12 @@ const footer = () => {
   const [message, setMessage] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
 
+  const navbarItems = [
+    { path: "/rooms", name: "방 보기" },
+    { path: "/rooms/rental", name: "렌탈" },
+    { path: "/rooms/homestay", name: "홈 스테이" },
+    { path: "/contact", name: "문의" },
+  ];
   const [open, setOpen] = useState(false);
   const handleClick = () => {
     setOpen(true);
@@ -32,8 +38,8 @@ const footer = () => {
 
   const action = (
     <>
-      <Button color="secondary" size="small" onClick={handleClose}>
-        UNDO
+      <Button color="primary" size="small" onClick={handleClose}>
+        지우기
       </Button>
     </>
   );
@@ -89,10 +95,9 @@ const footer = () => {
 
         <div id="footer_menu">
           <h4 style={{ fontWeight: "bold" }}>메뉴</h4>
-          <Link href="/rooms">방 보기</Link>
-          <Link href="/information">안내</Link>
-          <Link href="/faq">공지사항</Link>
-          <Link href="/contact">문의</Link>
+          {navbarItems.map((data) => (
+            <Link href={`${data.path}`}>{data.name}</Link>
+          ))}
         </div>
 
         <div id="footer_contact">
@@ -111,9 +116,13 @@ const footer = () => {
         </div>
 
         <div id="footer_contact_form">
+          <h4 style={{ margin: "0", fontWeight: "bold" }}>
+            홈스테이/렌트 등록 문의
+          </h4>
           <form ref={form} onSubmit={sendEmail}>
             <TextField
               label="이름"
+              type="text"
               variant="standard"
               name="from_name"
               value={name}
@@ -123,18 +132,21 @@ const footer = () => {
               label="이메일"
               variant="standard"
               name="from_email"
+              type="email"
               value={email}
               onChange={handleEmail}
             />
             <TextField
               label="전화번호"
               variant="standard"
+              type="number"
               name="phone_number"
               value={phoneNumber}
               onChange={handlePhoneNumber}
             />
             <TextField
               label="문의 메세지"
+              type="text"
               variant="standard"
               name="message"
               value={message}
