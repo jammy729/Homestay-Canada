@@ -33,14 +33,17 @@ export default async function Page() {
       </section>
 
       <section className="desc_container container-layout">
-        <h1>{data.address}</h1>
-        <h2 style={{ textTransform: "uppercase" }}>{data.city}</h2>
-        <h3 className="description_title">방 정보</h3>
+        <h1>{`${data.address}, ${data.city}`}</h1>
+        <h2 style={{ textTransform: "uppercase" }}>
+          {detectStringType(data.price)}
+        </h2>
+        <h3 className="description_title">Room Description</h3>
         <p>{data.description}</p>
       </section>
       <section className="img_gallery_container container-layout">
-        <h3>방 사진 갤러리</h3>
+        <h3>Room photo gallery</h3>
       </section>
+
       <section className="img_gallery_container container-full-layout">
         <div className="img_gallery_wrapper">
           {data.imageGallery.map((imageData, index) => (
@@ -61,10 +64,12 @@ export default async function Page() {
           ))}
         </div>
       </section>
+
+      {/* SIMILAR LISTINGS */}
       {similarListings.length > 0 && (
         <section className="similar_listings_container container-layout">
           <div className="similar_listings_title">
-            <h3>{data.city} 에 있는 리스팅 더 보기</h3>
+            <h3>See more listings in {data.city}</h3>
           </div>
           <div className="similar_listing_wrapper">
             {similarListings.map((listing, dataIndex) => (
@@ -92,31 +97,6 @@ export default async function Page() {
           </div>
         </section>
       )}
-      {/* {similarListings.length === 0 ? (
-        <div></div>
-      ) : (
-        similarListings.map((data, dataIndex) => (
-          <section
-            className="similar_listings_container container-layout"
-            key={dataIndex}
-          >
-            <div id="similar_listings_title">
-              <h3>{data.city} 에 있는 리스팅 더 보기</h3>
-            </div>
-            <div className="similar_listing_wrapper">
-              <div className="similar_listing">
-                <Image
-                  className="similar_listing_thumbnail"
-                  src={data.coverImage}
-                  width={1080}
-                  height={800}
-                  alt={`Images for ${data.address}, in ${data.city}`}
-                />
-              </div>
-            </div>
-          </section>
-        ))
-      )} */}
     </main>
   );
 }
@@ -139,7 +119,6 @@ async function getAreaListing(city) {
   let apiEndpoint = `${process.env.API_ENDPOINT}/listing/city`;
   apiEndpoint += `?city=${encodeURIComponent(city)}`;
 
-  console.log("API Endpoint:", apiEndpoint); // Log the API endpoint
   const apiResponse = await fetch(apiEndpoint, {
     cache: "no-store",
   });

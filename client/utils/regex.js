@@ -1,5 +1,3 @@
-
-
 export default function detectStringType(input) {
   const numberRegex = /^\d+$/;
   const letterRegex = /^[a-zA-Z\s]+$/;
@@ -9,6 +7,6 @@ export default function detectStringType(input) {
   } else if (letterRegex.test(input)) {
     return `${input}`;
   } else {
-    return "연락주세요";
+    return "Contact Us";
   }
 }

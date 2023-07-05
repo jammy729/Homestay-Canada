@@ -7,7 +7,7 @@ import Snackbar from "@mui/material/Snackbar";
 
 import Link from "next/link";
 import emailjs from "@emailjs/browser";
-
+import footerItem from "../utils/navbaritems.json";
 import Logo from "./logo";
 const footer = () => {
   const date = new Date();
@@ -95,8 +95,8 @@ const footer = () => {
 
         <div id="footer_menu">
           <h4 style={{ fontWeight: "bold" }}>메뉴</h4>
-          {navbarItems.map((data) => (
-            <Link href={`${data.path}`}>
+          {footerItem.map((data, dataIndex) => (
+            <Link href={`${data.path}`} key={dataIndex}>
               <p>{data.name}</p>
             </Link>
           ))}
@@ -119,7 +119,7 @@ const footer = () => {
 
         <div id="footer_contact_form">
           <h4 style={{ margin: "0", fontWeight: "bold" }}>
-            홈스테이/렌트 등록 문의
+            홈스테이 / 렌트 등록 문의
           </h4>
           <form ref={form} onSubmit={sendEmail}>
             <TextField

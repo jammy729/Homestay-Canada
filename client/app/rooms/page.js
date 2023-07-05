@@ -76,16 +76,16 @@ export default function Page() {
         <h2>방보기 - View Listings</h2>
         <div className="btn_group">
           <Link href="/rooms/rental">
-            <div className="btn primary">렌탈 방 보기</div>
+            <div className="btn primary">rentals</div>
           </Link>
           <Link href="/rooms/homestay">
-            <div className="btn primary">홈 스테이 방 보기</div>
+            <div className="btn primary">homestays</div>
           </Link>
         </div>
       </section>
       <section className="city_filter container-layout">
         <FormControl className="city_filter_form">
-          <InputLabel>도시</InputLabel>
+          <InputLabel>City</InputLabel>
           <Select
             labelId="city-filter-label"
             id="city-filter"
