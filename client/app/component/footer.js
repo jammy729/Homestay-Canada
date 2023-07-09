@@ -7,22 +7,17 @@ import Snackbar from "@mui/material/Snackbar";
 
 import Link from "next/link";
 import emailjs from "@emailjs/browser";
-import footerItem from "../utils/navbaritems.json";
 import Logo from "./logo";
+import NavbarItems from "../../json/navigationItems.json";
 const footer = () => {
   const date = new Date();
   let year = date.getFullYear();
+
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
   const [message, setMessage] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
 
-  const navbarItems = [
-    { path: "/rooms", name: "방 보기" },
-    { path: "/rooms/rental", name: "렌탈" },
-    { path: "/rooms/homestay", name: "홈 스테이" },
-    { path: "/contact", name: "문의" },
-  ];
   const [open, setOpen] = useState(false);
   const handleClick = () => {
     setOpen(true);
@@ -32,7 +27,6 @@ const footer = () => {
     if (reason === "clickaway") {
       return;
     }
-
     setOpen(false);
   };
 
@@ -95,7 +89,7 @@ const footer = () => {
 
         <div id="footer_menu">
           <h4 style={{ fontWeight: "bold" }}>메뉴</h4>
-          {footerItem.map((data, dataIndex) => (
+          {NavbarItems.map((data, dataIndex) => (
             <Link href={`${data.path}`} key={dataIndex}>
               <p>{data.name}</p>
             </Link>
@@ -118,9 +112,7 @@ const footer = () => {
         </div>
 
         <div id="footer_contact_form">
-          <h4 style={{ margin: "0", fontWeight: "bold" }}>
-            홈스테이 / 렌트 등록 문의
-          </h4>
+          <h4 style={{ margin: "0", fontWeight: "bold" }}>등록 문의</h4>
           <form ref={form} onSubmit={sendEmail}>
             <TextField
               label="이름"

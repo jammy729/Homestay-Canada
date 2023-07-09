@@ -3,22 +3,15 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import Head from "next/head";
-import { usePathname, useRouter } from "next/navigation";
+import NavbarItems from "../../json/navigationItems.json";
+import DashboardItems from "../../json/dashboardItems.json";
+import { usePathname } from "next/navigation";
 import Logo from "./logo";
-const navbarItems = [
-  { path: "/rooms", name: "방 보기" },
-  { path: "/rooms/rental", name: "렌탈" },
-  { path: "/rooms/homestay", name: "홈 스테이" },
-  { path: "/contact", name: "문의" },
-];
-
-const dashboardItems = [
-  { path: "/admin/createListing", name: "리스팅 더하기" },
-];
 
 const header = () => {
   const pathname = usePathname();
-  const isDashboard = pathname.startsWith("/admin");
+  // /admin and additional path
+  const isDashboard = pathname.startsWith("/admin") && pathname.length > 6;
 
   const [open, setOpen] = useState(false);
   return (
@@ -35,12 +28,12 @@ const header = () => {
           </div>
           <div className="navbar_menu">
             {isDashboard
-              ? dashboardItems.map((data, index) => (
+              ? DashboardItems.map((data, index) => (
                   <Link href={data.path} key={index}>
                     <div className="navbar_items">{data.name}</div>
                   </Link>
                 ))
-              : navbarItems.map((data, index) => (
+              : NavbarItems.map((data, index) => (
                   <Link href={data.path} key={index}>
                     <div className="navbar_items">{data.name}</div>
                   </Link>
@@ -61,7 +54,7 @@ const header = () => {
             ></span>
           </div>
           <div className={"mobile_drawer " + (open ? "open" : "close")}>
-            {navbarItems.map((data, mobileIndex) => (
+            {NavbarItems.map((data, mobileIndex) => (
               <div className="mobile_items" key={mobileIndex}>
                 <Link href={data.path}>
                   <div className="navbar_items">

@@ -6,7 +6,7 @@ import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
-import ListingGallery from "@/component/listingGallery";
+import ListingGallery from "../component/listingGallery";
 
 async function getListing(city) {
   let apiEndpoint = `${process.env.API_ENDPOINT}/listing/city`;

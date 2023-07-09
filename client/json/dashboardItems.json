@@ -1,0 +1,4 @@
+[
+  { "path": "/admin/createListing", "name": "리스팅 더하기" },
+  { "path": "/admin/setting", "name": "세팅" }
+]

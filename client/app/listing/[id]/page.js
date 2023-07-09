@@ -2,7 +2,7 @@
 import React from "react";
 import Image from "next/image";
 import { useSearchParams } from "next/navigation";
-import LightBox from "@/component/lightbox";
+import LightBox from "../../component/lightbox";
 import Link from "next/link";
 import detectStringType from "@/utils/regex";
 export default async function Page() {

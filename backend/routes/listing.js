@@ -4,7 +4,7 @@ const mongoose = require("mongoose");
 
 const router = express.Router();
 
-router.get("/", async (req, res) => {
+router.get("/", async (_req, res) => {
   try {
     const result = await ListingModel.find({}).sort({ date: -1 }).limit(4);
     res.status(200).json(result);
@@ -16,7 +16,6 @@ router.get("/", async (req, res) => {
 router.get("/city", async (req, res) => {
   let { city } = req.query;
 
-  // Set city to blank if "All" is selected
   if (city === "All") {
     city = "";
   }

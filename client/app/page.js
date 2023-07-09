@@ -1,15 +1,10 @@
 "use client";
 import React from "react";
-import ListingGallery from "@/component/listingGallery";
+import ListingGallery from "./component/listingGallery";
 
-async function getListing() {
-  const apiResponse = await fetch(`${process.env.API_ENDPOINT}/listing`);
-  return apiResponse.json();
-}
 export default async function Page() {
   const listing = await getListing();
 
-  console.log(listing.length);
   return (
     <main>
       {/* GREETINGS */}
@@ -49,4 +44,9 @@ export default async function Page() {
       </section>
     </main>
   );
+}
+
+async function getListing() {
+  const apiResponse = await fetch(`${process.env.API_ENDPOINT}/listing`);
+  return apiResponse.json();
 }
