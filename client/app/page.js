@@ -47,6 +47,8 @@ export default async function Page() {
 }
 
 async function getListing() {
-  const apiResponse = await fetch(`${process.env.API_ENDPOINT}/listing`);
+  const apiResponse = await fetch(`${process.env.API_ENDPOINT}/listing/home`, {
+    cache: "no-store",
+  });
   return apiResponse.json();
 }

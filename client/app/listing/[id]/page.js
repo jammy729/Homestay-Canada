@@ -5,6 +5,7 @@ import { useSearchParams } from "next/navigation";
 import LightBox from "../../component/lightbox";
 import Link from "next/link";
 import detectStringType from "@/utils/regex";
+
 export default async function Page() {
   const searchParams = useSearchParams();
   const address = searchParams.get("address");

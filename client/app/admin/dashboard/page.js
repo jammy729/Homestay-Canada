@@ -9,18 +9,9 @@ import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
 import detectStringType from "@/utils/regex";
 
-async function getListing() {
-  const apiResponse = await fetch(`${process.env.API_ENDPOINT}/listing`);
-  if (!apiResponse.ok) {
-    // This will activate the closest `error.js` Error Boundary
-    throw new Error("Failed to fetch data");
-  }
-  return apiResponse.json();
-}
-
 export default async function Page() {
   const listing = await getListing();
-  console.log(listing.length);
+
   const deleteListing = (id) => {
     axios.delete(`${process.env.API_ENDPOINT}/listing/delete/${id}`);
     alert("Listing Deleted");
@@ -80,4 +71,15 @@ export default async function Page() {
       </section>
     </React.Fragment>
   );
+}
+
+async function getListing() {
+  const apiResponse = await fetch(`${process.env.API_ENDPOINT}/listing`, {
+    cache: "no-store",
+  });
+  if (!apiResponse.ok) {
+    // This will activate the closest `error.js` Error Boundary
+    throw new Error("Failed to fetch data");
+  }
+  return apiResponse.json();
 }
