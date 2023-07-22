@@ -9,6 +9,7 @@ const ListingGallery = ({
   price,
   coverImage,
   accommodationType,
+  alt,
 }) => {
   return (
     <div className="listings_img_container">
@@ -19,7 +20,12 @@ const ListingGallery = ({
       >
         <div className="listing">
           <div className="listing_image">
-            <Image src={`${coverImage}`} width={1080} height={800}></Image>
+            <Image
+              src={`${coverImage}`}
+              width={1080}
+              height={800}
+              alt={alt}
+            ></Image>
           </div>
           <div className="listing_content">
             <h5 id="address">{address}</h5>

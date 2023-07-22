@@ -118,6 +118,7 @@ export default function Page() {
               id={data._id}
               city={data.city}
               price={data.price}
+              alt={`Cover image of ${data.address} in ${data.city}`}
               coverImage={
                 data.coverImage ||
                 (data.imageGallery.length > 0

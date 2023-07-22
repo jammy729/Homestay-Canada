@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import Head from "next/head";
 import NavbarItems from "../../json/navigationItems.json";
@@ -14,6 +14,22 @@ const header = () => {
   const isDashboard = pathname.startsWith("/admin") && pathname.length > 6;
 
   const [open, setOpen] = useState(false);
+  console.log(open);
+
+  useEffect(() => {
+    const handleNavbarLink = () => {
+      setOpen((current) => !current);
+    };
+    if (document.readyState === "complete") {
+      // handleNavbarLink();
+      console.log("ready");
+    }
+    // else {
+    //   window.addEventListener("load", handleNavbarLink, false);
+    //   return () => window.removeEventListener("load", handleNavbarLink);
+    // }
+  }, []);
+
   return (
     <React.Fragment>
       <header>
@@ -56,7 +72,7 @@ const header = () => {
           <div className={"mobile_drawer " + (open ? "open" : "close")}>
             {NavbarItems.map((data, mobileIndex) => (
               <div className="mobile_items" key={mobileIndex}>
-                <Link href={data.path}>
+                <Link href={data.path} onClick={() => handleNavbarLink()}>
                   <div className="navbar_items">
                     <h2>{data.name}</h2>
                   </div>

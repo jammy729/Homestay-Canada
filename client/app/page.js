@@ -28,6 +28,7 @@ export default async function Page() {
             <ListingGallery
               key={dataIndex}
               id={data._id}
+              alt={`Cover image of ${data.address} in ${data.city}`}
               address={data.address}
               city={data.city}
               price={data.price}

@@ -112,7 +112,7 @@ const footer = () => {
         </div>
 
         <div id="footer_contact_form">
-          <h4 style={{ margin: "0", fontWeight: "bold" }}>등록 문의</h4>
+          <h4 style={{ margin: "0", fontWeight: "bold" }}>리스팅 문의</h4>
           <form ref={form} onSubmit={sendEmail}>
             <TextField
               label="이름"

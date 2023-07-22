@@ -18,10 +18,9 @@ main#listings-detail {
       width: 100%;
       gap: 50px;
       justify-content: center;
-      cursor: pointer;
       margin-bottom: 2rem;
       @media (min-width: $screen-sm-min) {
-        gap: 25 px;
+        gap: 25px;
       }
       @media (min-width: $screen-md-min) {
         gap: 15px;
@@ -30,6 +29,7 @@ main#listings-detail {
       .img_gallery {
         height: 100%;
         img.img_gallery_thumbnails {
+          cursor: pointer;
           filter: brightness(100%);
           transition: all 0.5s ease;
           &:hover {

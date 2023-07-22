@@ -1,4 +1,5 @@
 [
+  { "path": "/", "name": "홈" },
   { "path": "/rooms", "name": "방 보기" },
   { "path": "/rooms/rental", "name": "렌탈" },
   { "path": "/rooms/homestay", "name": "홈 스테이" },
