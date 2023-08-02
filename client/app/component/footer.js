@@ -2,7 +2,7 @@
 import React from "react";
 import Link from "next/link";
 import Logo from "./logo";
-import NavbarItems from "@/json/navigationItems.json";
+import NavbarItems from "../../json/navigationItems.json";
 const footer = () => {
   const date = new Date();
   const year = date.getFullYear();

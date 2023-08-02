@@ -2,8 +2,8 @@
 
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
-import NavbarItems from "@/json/navigationItems.json";
-import DashboardItems from "@/json/dashboardItems.json";
+import NavbarItems from "../../json/navigationItems.json";
+import DashboardItems from "../..//json/dashboardItems.json";
 import { usePathname } from "next/navigation";
 import Logo from "./logo";
 import MobileLogo from "./mobile_logo";

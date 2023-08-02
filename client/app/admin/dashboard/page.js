@@ -7,7 +7,7 @@ import Image from "next/image";
 import { AiFillEdit, AiFillDelete } from "react-icons/ai";
 import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
-import detectStringType from "@/utils/regex";
+import detectStringType from "../../../utils/regex";
 
 export default async function Page() {
   const listing = await getListing();
