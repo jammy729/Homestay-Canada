@@ -7,23 +7,13 @@ import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import ListingGallery from "../component/listingGallery";
-
-async function getListing(city) {
-  let apiEndpoint = `${process.env.API_ENDPOINT}/listing/city`;
-  if (city && city !== "All") {
-    apiEndpoint += `?city=${encodeURIComponent(city)}`;
-  }
-  console.log("API Endpoint:", apiEndpoint);
-  const apiResponse = await fetch(apiEndpoint);
-  return apiResponse.json();
-}
+import ContactForm from "../component/contact_form";
 
 export default function Page() {
   const query = useSearchParams();
   const cityquery = query.get("city");
-  console.log(cityquery);
-  const [selectedCity, setSelectedCity] = useState(cityquery || "All");
 
+  const [selectedCity, setSelectedCity] = useState(cityquery || "All");
   const [listing, setListing] = useState([]);
   const [noResultsFound, setNoResultsFound] = useState(false);
 
@@ -129,6 +119,19 @@ export default function Page() {
           ))
         )}
       </section>
+      <section className="contact_form">
+        <ContactForm content="지금 연락하세요" />
+      </section>
     </main>
   );
+}
+
+async function getListing(city) {
+  let apiEndpoint = `${process.env.API_ENDPOINT}/listing/city`;
+  if (city && city !== "All") {
+    apiEndpoint += `?city=${encodeURIComponent(city)}`;
+  }
+  console.log("API Endpoint:", apiEndpoint);
+  const apiResponse = await fetch(apiEndpoint);
+  return apiResponse.json();
 }

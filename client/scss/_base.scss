@@ -1,3 +1,5 @@
+@import "variables";
+
 *,
 *::before,
 *::after {
@@ -34,9 +36,13 @@ html {
   color: #000;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 h1,
 #h1_style {
-  font-size: 2.666667rem;
+  font-size: 1.8rem;
   font-weight: 300;
   font-style: normal;
   letter-spacing: 3px;
@@ -44,11 +50,14 @@ h1,
   text-transform: uppercase;
   margin-bottom: 0.5em;
   margin-top: 0;
+  @media (min-width: $screen-md) {
+    font-size: 2.666667rem;
+  }
 }
 
 h2,
 #h2_style {
-  font-size: 2rem;
+  font-size: 1.5rem;
   font-weight: 300;
   font-style: normal;
   letter-spacing: 2px;
@@ -56,11 +65,14 @@ h2,
   text-transform: uppercase;
   margin-bottom: 0.5em;
   margin-top: 0;
+  @media (min-width: $screen-md) {
+    font-size: 2rem;
+  }
 }
 
 h3,
 #h3_style {
-  font-size: 1.3333rem;
+  font-size: 1.2rem;
   font-weight: 400;
   font-style: normal;
   letter-spacing: 2px;
@@ -68,6 +80,9 @@ h3,
   text-transform: uppercase;
   margin-bottom: 0.5em;
   margin-top: 0;
+  @media (min-width: $screen-md) {
+    font-size: 1.3333rem;
+  }
 }
 
 h4,
@@ -151,10 +166,9 @@ div.btn {
   text-transform: uppercase;
   min-width: 10rem;
   padding: 0.6rem;
-  border-radius: 4px;
 
   &.primary {
-    background-color: rgb(74, 74, 75);
+    background-color: grey;
     color: #fff;
     transition: 0.15s ease-in-out;
 

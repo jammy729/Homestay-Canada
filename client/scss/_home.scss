@@ -6,6 +6,7 @@ main {
     flex-direction: column;
     flex-wrap: wrap;
     gap: 35px;
+    margin-bottom: 25px;
     @media only screen and (min-width: $screen-sm-min) {
       flex-direction: row;
       gap: 10px;

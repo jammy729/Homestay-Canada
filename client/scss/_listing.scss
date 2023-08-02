@@ -8,18 +8,38 @@ main#listings-detail {
   }
 
   section.desc_container {
-    margin-top: 20px;
+    margin: 20px 0;
+  }
+
+  section.listing_content {
+    a.photos_btn {
+      display: flex;
+      justify-content: left;
+      button {
+        text-transform: uppercase;
+        background-color: grey;
+        border: none;
+        padding: 12px;
+        width: 100%;
+        @media (min-width: $screen-md) {
+          width: unset;
+        }
+      }
+    }
   }
 
   section.img_gallery_container {
+    margin-top: 2rem;
     .img_gallery_wrapper {
-      display: flex;
-      flex-wrap: wrap;
-      width: 100%;
-      gap: 50px;
-      justify-content: center;
-      margin-bottom: 2rem;
+      display: block;
+
       @media (min-width: $screen-sm-min) {
+        display: flex;
+        flex-wrap: wrap;
+        width: 100%;
+        gap: 50px;
+        justify-content: center;
+        margin-bottom: 2rem;
         gap: 25px;
       }
       @media (min-width: $screen-md-min) {
@@ -28,6 +48,7 @@ main#listings-detail {
 
       .img_gallery {
         height: 100%;
+        padding: 20px 0;
         img.img_gallery_thumbnails {
           cursor: pointer;
           filter: brightness(100%);
@@ -39,6 +60,7 @@ main#listings-detail {
         }
 
         @media only screen and (min-width: $screen-sm-min) {
+          padding: unset;
           height: 15rem;
           width: calc((100% / 2) - (50px / 2));
         }

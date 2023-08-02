@@ -1,85 +1,14 @@
 "use client";
-import React, { useRef, useState } from "react";
-import TextField from "@mui/material/TextField";
-import Button from "@mui/material/Button";
-import { AiOutlineSend } from "react-icons/ai";
-import Snackbar from "@mui/material/Snackbar";
-
+import React from "react";
 import Link from "next/link";
-import emailjs from "@emailjs/browser";
 import Logo from "./logo";
-import NavbarItems from "../../json/navigationItems.json";
+import NavbarItems from "@/json/navigationItems.json";
 const footer = () => {
   const date = new Date();
-  let year = date.getFullYear();
+  const year = date.getFullYear();
 
-  const [email, setEmail] = useState("");
-  const [name, setName] = useState("");
-  const [message, setMessage] = useState("");
-  const [phoneNumber, setPhoneNumber] = useState("");
-
-  const [open, setOpen] = useState(false);
-  const handleClick = () => {
-    setOpen(true);
-  };
-
-  const handleClose = (event, reason) => {
-    if (reason === "clickaway") {
-      return;
-    }
-    setOpen(false);
-  };
-
-  const action = (
-    <>
-      <Button color="primary" size="small" onClick={handleClose}>
-        지우기
-      </Button>
-    </>
-  );
-
-  const handleEmail = (event) => {
-    setEmail(event.target.value);
-  };
-  const handleName = (event) => {
-    setName(event.target.value);
-  };
-  const handleMessage = (event) => {
-    setMessage(event.target.value);
-  };
-  const handlePhoneNumber = (event) => {
-    setPhoneNumber(event.target.value);
-  };
-
-  const sendEmail = (e) => {
-    e.preventDefault();
-    emailjs
-      .sendForm(
-        "service_e6ouy5j",
-        "template_br1d57i",
-        form.current,
-        "MlWnv73jh5_sjtIRS"
-      )
-      .then(
-        (result) => {
-          console.log(result.text);
-          console.log("email successful");
-
-          setEmail("");
-          setName("");
-          setMessage("");
-          setPhoneNumber("");
-        },
-        (error) => {
-          console.log(error.text);
-        }
-      );
-    e.target.reset();
-  };
-
-  const form = useRef();
   return (
-    <footer>
+    <footer id="footer">
       <section className="container-fluid">
         <div id="footer_logo">
           <Link href="/">
@@ -90,14 +19,25 @@ const footer = () => {
         <div id="footer_menu">
           <h4 style={{ fontWeight: "bold" }}>메뉴</h4>
           {NavbarItems.map((data, dataIndex) => (
-            <Link href={`${data.path}`} key={dataIndex}>
-              <p>{data.name}</p>
-            </Link>
+            <React.Fragment key={dataIndex}>
+              {data.path === "/contact" ? (
+                // Render something else for /contact
+                <Link href="#footer_contact_form">
+                  <p>{data.name}</p>
+                </Link>
+              ) : (
+                // Render the standard link for other paths
+                <Link href={`${data.path}`}>
+                  <p>{data.name}</p>
+                </Link>
+              )}
+            </React.Fragment>
           ))}
         </div>
 
         <div id="footer_contact">
           <h4 style={{ margin: "0", fontWeight: "bold" }}>문의 하기</h4>
+
           <h3 style={{ marginTop: "10px" }}>캐나다 홈스테이</h3>
           <p>
             <Link href="tel: 7789030729" className="phone_number">
@@ -109,63 +49,6 @@ const footer = () => {
               homestaycanada92@gmail.com
             </Link>
           </p>
-        </div>
-
-        <div id="footer_contact_form">
-          <h4 style={{ margin: "0", fontWeight: "bold" }}>리스팅 문의</h4>
-          <form ref={form} onSubmit={sendEmail}>
-            <TextField
-              label="이름"
-              type="text"
-              variant="standard"
-              name="from_name"
-              value={name}
-              onChange={handleName}
-            />
-            <TextField
-              label="이메일"
-              variant="standard"
-              name="from_email"
-              type="email"
-              value={email}
-              onChange={handleEmail}
-            />
-            <TextField
-              label="전화번호"
-              variant="standard"
-              type="number"
-              name="phone_number"
-              value={phoneNumber}
-              onChange={handlePhoneNumber}
-            />
-            <TextField
-              label="문의 메세지"
-              type="text"
-              variant="standard"
-              name="message"
-              value={message}
-              onChange={handleMessage}
-              rows={4}
-            />
-            <Button
-              variant="contained"
-              endIcon={<AiOutlineSend />}
-              sx={{ marginTop: "10px" }}
-              disabled={!email || !name || !message}
-              type="submit"
-              onClick={handleClick}
-            >
-              보내기
-            </Button>
-            <Snackbar
-              open={open}
-              severity="success"
-              autoHideDuration={6000}
-              onClose={handleClose}
-              message="이메일 보냈습니다"
-              action={action}
-            />
-          </form>
         </div>
       </section>
       <section className="footer_end">

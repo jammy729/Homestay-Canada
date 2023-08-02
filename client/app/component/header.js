@@ -2,34 +2,48 @@
 
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
-import Head from "next/head";
-import NavbarItems from "../../json/navigationItems.json";
-import DashboardItems from "../../json/dashboardItems.json";
+import NavbarItems from "@/json/navigationItems.json";
+import DashboardItems from "@/json/dashboardItems.json";
 import { usePathname } from "next/navigation";
 import Logo from "./logo";
-
+import MobileLogo from "./mobile_logo";
 const header = () => {
   const pathname = usePathname();
   // /admin and additional path
   const isDashboard = pathname.startsWith("/admin") && pathname.length > 6;
-
   const [open, setOpen] = useState(false);
-  console.log(open);
+  const handleMobileDrawerToggle = () => {
+    setOpen(!open);
+  };
 
-  useEffect(() => {
-    const handleNavbarLink = () => {
-      setOpen((current) => !current);
-    };
+  const handleMobileLinkClicked = () => {
     if (document.readyState === "complete") {
-      // handleNavbarLink();
-      console.log("ready");
+      setTimeout(() => {
+        setOpen(!open);
+      }, 350);
     }
-    // else {
-    //   window.addEventListener("load", handleNavbarLink, false);
-    //   return () => window.removeEventListener("load", handleNavbarLink);
-    // }
-  }, []);
+  };
 
+  const [logoState, setLogoState] = useState(false);
+  const isMobileView = () => {
+    return window.innerWidth < 576;
+  };
+  useEffect(() => {
+    const handleResize = () => {
+      if (isMobileView()) {
+        setLogoState(!isMobileView());
+        console.log("mobile view");
+      }
+      setLogoState(isMobileView());
+      console.log("desktop view");
+    };
+    window.addEventListener("resize", handleResize);
+    handleResize();
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+  console.log(logoState);
   return (
     <React.Fragment>
       <header>
@@ -39,7 +53,7 @@ const header = () => {
               href="/"
               style={{ display: "flex", justifyContent: "center" }}
             >
-              <Logo width={128} height={128} />
+              {logoState ? <MobileLogo /> : <Logo width={128} height={128} />}
             </Link>
           </div>
           <div className="navbar_menu">
@@ -56,7 +70,7 @@ const header = () => {
                 ))}
           </div>
           <div
-            onClick={() => setOpen(!open)}
+            onClick={handleMobileDrawerToggle}
             className={"mobile_menu " + (open ? "fixed" : "")}
           >
             <span
@@ -72,7 +86,7 @@ const header = () => {
           <div className={"mobile_drawer " + (open ? "open" : "close")}>
             {NavbarItems.map((data, mobileIndex) => (
               <div className="mobile_items" key={mobileIndex}>
-                <Link href={data.path} onClick={() => handleNavbarLink()}>
+                <Link href={data.path} onClick={handleMobileLinkClicked}>
                   <div className="navbar_items">
                     <h2>{data.name}</h2>
                   </div>

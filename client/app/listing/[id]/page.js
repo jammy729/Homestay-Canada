@@ -5,6 +5,7 @@ import { useSearchParams } from "next/navigation";
 import LightBox from "../../component/lightbox";
 import Link from "next/link";
 import detectStringType from "@/utils/regex";
+import ContactForm from "../../component/contact_form";
 
 export default async function Page() {
   const searchParams = useSearchParams();
@@ -12,11 +13,12 @@ export default async function Page() {
   const id = searchParams.get("id");
 
   const data = await getListing(address, id);
-
   const areaData = await getAreaListing(data.city);
-  const similarListings = areaData
-    .filter((areaData) => areaData._id !== id)
-    .slice(0, 3);
+
+  const similarListings =
+    areaData.length > 0
+      ? areaData.filter((areaData) => areaData._id !== id).slice(0, 3)
+      : [];
 
   return (
     <main id="listings-detail">
@@ -24,7 +26,9 @@ export default async function Page() {
         <Image
           src={
             data.coverImage ||
-            (data.imageGallery.length > 0 ? data.imageGallery[0] : defaultImage)
+            (data.imageGallery.length > 0
+              ? data.imageGallery[0]
+              : data.imageGallery[1])
           }
           alt="hello"
           className="cover_image"
@@ -33,25 +37,32 @@ export default async function Page() {
         />
       </section>
 
-      <section className="desc_container container-layout">
+      <section className="container-layout listing_content">
         <h1>{`${data.address}, ${data.city}`}</h1>
         <h2 style={{ textTransform: "uppercase" }}>
           {detectStringType(data.price)}
         </h2>
+        <a href="#photos" className="photos_btn" style={{ padding: "10px 0" }}>
+          <button>Browse for Photos</button>
+        </a>
         <h3 className="description_title">Room Description</h3>
         <p>{data.description}</p>
       </section>
+
+      <ContactForm content="지금 연락하세요" />
+
       <section className="img_gallery_container container-layout">
         <h3>Room photo gallery</h3>
       </section>
 
       <section className="img_gallery_container container-full-layout">
-        <div className="img_gallery_wrapper">
+        <div className="img_gallery_wrapper" id="photos">
           {data.imageGallery.map((imageData, index) => (
             <div className="img_gallery" key={index}>
               <LightBox
                 src={imageData}
                 alt={`Images for ${data.address}, in ${data.city}`}
+                zIndex={100}
               >
                 <Image
                   className="img_gallery_thumbnails"
@@ -103,11 +114,10 @@ export default async function Page() {
 }
 
 async function getListing(address, id) {
-  const url = `${
-    process.env.API_ENDPOINT
-  }/listing/detail?address=${encodeURIComponent(
-    address
-  )}&id=${encodeURIComponent(id)}`;
+  const url =
+    `${process.env.API_ENDPOINT}/listing/detail?address=${encodeURIComponent(
+      address
+    )}` + `&id=${encodeURIComponent(id)}`;
 
   const apiResponse = await fetch(url, {
     cache: "no-store",
@@ -117,8 +127,9 @@ async function getListing(address, id) {
 }
 
 async function getAreaListing(city) {
-  let apiEndpoint = `${process.env.API_ENDPOINT}/listing/city`;
-  apiEndpoint += `?city=${encodeURIComponent(city)}`;
+  const apiEndpoint =
+    `${process.env.API_ENDPOINT}/listing/city` +
+    `?city=${encodeURIComponent(city)}`;
 
   const apiResponse = await fetch(apiEndpoint, {
     cache: "no-store",

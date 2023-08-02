@@ -1,0 +1,93 @@
+.contact_form {
+  position: relative;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  max-width: unset;
+  margin-top: 2rem;
+  .form_content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+    * {
+      color: white;
+    }
+    @media (min-width: $screen-md) {
+      flex-direction: row;
+      padding: 3rem 15px;
+    }
+    #form_content_wrapper {
+      width: 100%;
+      position: relative;
+      h2,
+      h4 {
+        text-align: center;
+      }
+      @media (min-width: $screen-md) {
+        width: calc(100% / 3 * 2);
+        h2,
+        h4 {
+          text-align: left;
+        }
+      }
+    }
+    #footer_contact_form {
+      width: 100%;
+      position: relative;
+
+      @media (min-width: $screen-md) {
+        width: calc(100% / 3 * 1);
+      }
+
+      .form_input_wrapper {
+        input::-webkit-outer-spin-button,
+        input::-webkit-inner-spin-button {
+          -webkit-appearance: none;
+          margin: 0;
+        }
+        input[type="number"] {
+          -moz-appearance: textfield;
+          background: none;
+        }
+
+        input[type="text"],
+        input[type="number"],
+        input:autofill,
+        input:-webkit-autofill,
+        input:-webkit-autofill:focus,
+        input:focus {
+          width: 100%;
+          display: flex;
+          flex-direction: column;
+          background: none;
+          border: 1px solid white;
+          padding: 10px;
+        }
+      }
+      .submit_btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        @media (min-width: $screen-md) {
+          justify-content: left;
+        }
+        button {
+          cursor: pointer;
+          text-transform: uppercase;
+          width: calc(100% / 3);
+          background-color: #0062cc;
+          border: none;
+          padding: 12px;
+          @media (min-width: $screen-md) {
+            width: calc(100% / 2);
+          }
+        }
+        button:disabled {
+          background-color: grey;
+        }
+      }
+    }
+  }
+}

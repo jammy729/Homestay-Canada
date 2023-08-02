@@ -1,6 +1,7 @@
 "use client";
 import React from "react";
 import ListingGallery from "./component/listingGallery";
+import ContactForm from "./component/contact_form";
 
 export default async function Page() {
   const listing = await getListing();
@@ -43,13 +44,21 @@ export default async function Page() {
           ))
         )}
       </section>
+      <section className="contact_form">
+        <ContactForm content="지금 연락하세요" />
+      </section>
     </main>
   );
 }
 
 async function getListing() {
-  const apiResponse = await fetch(`${process.env.API_ENDPOINT}/listing/home`, {
-    cache: "no-store",
-  });
-  return apiResponse.json();
+  const apiEndpoint = `${process.env.API_ENDPOINT}/listing/home`;
+  const res = await fetch(apiEndpoint);
+
+  if (!res.ok) {
+    // This will activate the closest `error.js` Error Boundary
+    throw new Error("Failed to fetch data");
+  }
+
+  return res.json();
 }
