@@ -1,19 +1,37 @@
 "use client";
-import React from "react";
+import React, { use } from "react";
 import Image from "next/image";
 import { useSearchParams } from "next/navigation";
 import LightBox from "../../component/lightbox";
 import Link from "next/link";
-import detectStringType from "../../../utils/regex";
+import detectStringType from "@/utils/regex";
 import ContactForm from "../../component/contact_form";
 
-export default async function Page() {
+async function getIndividualListing(address, id) {
+  const url =
+    `${process.env.API_ENDPOINT}/listing/detail?address=` +
+    `${encodeURIComponent(address)}` +
+    `&id=${encodeURIComponent(id)}`;
+
+  const res = await fetch(url);
+  return res.json();
+}
+
+async function getAreaListing(city) {
+  const url =
+    `${process.env.API_ENDPOINT}/listing/city` +
+    `?city=${encodeURIComponent(city)}`;
+  const res = await fetch(url);
+  return res.json();
+}
+
+export default function Page() {
   const searchParams = useSearchParams();
   const address = searchParams.get("address");
   const id = searchParams.get("id");
 
-  const data = await getListing(address, id);
-  const areaData = await getAreaListing(data.city);
+  const data = use(getIndividualListing(address, id));
+  const areaData = use(getAreaListing(data.city));
 
   const similarListings =
     areaData.length > 0
@@ -69,6 +87,7 @@ export default async function Page() {
                   src={imageData}
                   width={1080}
                   height={800}
+                  priority={true}
                   alt={`Images for ${data.address}, in ${data.city}`}
                 />
               </LightBox>
@@ -111,28 +130,4 @@ export default async function Page() {
       )}
     </main>
   );
-}
-
-async function getListing(address, id) {
-  const url =
-    `${process.env.API_ENDPOINT}/listing/detail?address=${encodeURIComponent(
-      address
-    )}` + `&id=${encodeURIComponent(id)}`;
-
-  const apiResponse = await fetch(url, {
-    cache: "no-store",
-  });
-
-  return apiResponse.json();
-}
-
-async function getAreaListing(city) {
-  const apiEndpoint =
-    `${process.env.API_ENDPOINT}/listing/city` +
-    `?city=${encodeURIComponent(city)}`;
-
-  const apiResponse = await fetch(apiEndpoint, {
-    cache: "no-store",
-  });
-  return apiResponse.json();
 }

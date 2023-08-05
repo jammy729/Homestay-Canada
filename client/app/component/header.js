@@ -32,10 +32,8 @@ const header = () => {
     const handleResize = () => {
       if (isMobileView()) {
         setLogoState(!isMobileView());
-        console.log("mobile view");
       }
       setLogoState(isMobileView());
-      console.log("desktop view");
     };
     window.addEventListener("resize", handleResize);
     handleResize();
@@ -43,7 +41,6 @@ const header = () => {
       window.removeEventListener("resize", handleResize);
     };
   }, []);
-  console.log(logoState);
   return (
     <React.Fragment>
       <header>

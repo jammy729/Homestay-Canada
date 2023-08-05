@@ -33,7 +33,6 @@ export default function Page() {
     { value: "rental", label: "Rental" },
     { value: "homestay", label: "Homestay" },
   ];
-  console.log({ listing });
 
   const handleChange = (event) => {
     const { name, value } = event.target;

@@ -6,6 +6,15 @@ import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import ListingGallery from "../../component/listingGallery";
 
+async function getHomestayListing(city) {
+  let apiEndpoint = `${process.env.API_ENDPOINT}/listing/homestay`;
+  if (city && city !== "All") {
+    apiEndpoint += `?city=${encodeURIComponent(city)}`;
+  }
+  const apiResponse = await fetch(apiEndpoint);
+  return apiResponse.json();
+}
+
 export default function Page() {
   const [selectedCity, setSelectedCity] = useState("All");
   const [listing, setListing] = useState([]);
@@ -19,7 +28,7 @@ export default function Page() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const data = await getListing(selectedCity);
+        const data = await getHomestayListing(selectedCity);
         setListing(data);
         setNoResultsFound(data.length === 0);
       } catch (error) {
@@ -91,15 +100,4 @@ export default function Page() {
       )}
     </main>
   );
-}
-
-async function getListing(city) {
-  let apiEndpoint = `${process.env.API_ENDPOINT}/listing/homestay`;
-  if (city && city !== "All") {
-    apiEndpoint += `?city=${encodeURIComponent(city)}`;
-  }
-  const apiResponse = await fetch(apiEndpoint, {
-    cache: "no-store",
-  });
-  return apiResponse.json();
 }

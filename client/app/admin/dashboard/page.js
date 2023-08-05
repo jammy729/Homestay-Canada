@@ -1,7 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
-
+import React from "react";
 import axios from "axios";
 import Image from "next/image";
 import { AiFillEdit, AiFillDelete } from "react-icons/ai";
@@ -12,8 +11,8 @@ import detectStringType from "../../../utils/regex";
 export default async function Page() {
   const listing = await getListing();
 
-  const deleteListing = (id) => {
-    axios.delete(`${process.env.API_ENDPOINT}/listing/delete/${id}`);
+  const deleteListing = async (id) => {
+    await axios.delete(`${process.env.API_ENDPOINT}/listing/delete/${id}`);
     alert("Listing Deleted");
     router.push("/admin/dashboard");
   };
@@ -74,12 +73,6 @@ export default async function Page() {
 }
 
 async function getListing() {
-  const apiResponse = await fetch(`${process.env.API_ENDPOINT}/listing`, {
-    cache: "no-store",
-  });
-  if (!apiResponse.ok) {
-    // This will activate the closest `error.js` Error Boundary
-    throw new Error("Failed to fetch data");
-  }
+  const apiResponse = await fetch(`${process.env.API_ENDPOINT}/listing`);
   return apiResponse.json();
 }

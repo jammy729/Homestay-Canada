@@ -25,6 +25,7 @@ const ListingGallery = ({
               width={1080}
               height={800}
               alt={alt}
+              priority={true}
             ></Image>
           </div>
           <div className="listing_content">

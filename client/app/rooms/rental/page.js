@@ -1,19 +1,18 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, use } from "react";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import ListingGallery from "../../component/listingGallery";
 
-async function getListing(city) {
-  let apiEndpoint = `${process.env.API_ENDPOINT}/listing/rental`;
+async function getRentalListing(city) {
+  let url = `${process.env.API_ENDPOINT}/listing/rental`;
   if (city && city !== "All") {
     apiEndpoint += `?city=${encodeURIComponent(city)}`;
   }
-  console.log("API Endpoint:", apiEndpoint);
-  const apiResponse = await fetch(apiEndpoint);
-  return apiResponse.json();
+  const res = await fetch(url);
+  return res.json();
 }
 
 export default function Page() {
@@ -30,7 +29,7 @@ export default function Page() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const data = await getListing(selectedCity);
+        const data = await getRentalListing(selectedCity);
         setListing(data);
         setNoResultsFound(data.length === 0);
       } catch (error) {

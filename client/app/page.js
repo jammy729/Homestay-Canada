@@ -1,15 +1,21 @@
 "use client";
-import React from "react";
+import React, { use } from "react";
 import ListingGallery from "./component/listingGallery";
 import ContactForm from "./component/contact_form";
 
-export default async function Page() {
-  const listing = await getListing();
+async function getMainListing() {
+  const url = `${process.env.API_ENDPOINT}/listing/home`;
+  const res = await fetch(url);
+  return res.json();
+}
 
+const dataPromise = getMainListing();
+
+export default function Page() {
+  const listing = use(dataPromise);
+  console.log({ listing });
   return (
     <main>
-      {/* GREETINGS */}
-
       <section className="container-layout">
         <div className="greeting">
           <h1>홈스테이 캐나다</h1>
@@ -49,16 +55,4 @@ export default async function Page() {
       </section>
     </main>
   );
-}
-
-async function getListing() {
-  const apiEndpoint = `${process.env.API_ENDPOINT}/listing/home`;
-  const res = await fetch(apiEndpoint);
-
-  if (!res.ok) {
-    // This will activate the closest `error.js` Error Boundary
-    throw new Error("Failed to fetch data");
-  }
-
-  return res.json();
 }
