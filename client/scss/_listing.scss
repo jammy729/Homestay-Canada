@@ -15,7 +15,9 @@ main#listings-detail {
     a.photos_btn {
       display: flex;
       justify-content: left;
+      padding: 0 10px;
       button {
+        cursor: pointer;
         text-transform: uppercase;
         background-color: grey;
         border: none;
@@ -25,6 +27,9 @@ main#listings-detail {
           width: unset;
         }
       }
+    }
+    .description_title {
+      margin-top: 2rem;
     }
   }
 

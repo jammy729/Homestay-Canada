@@ -7,6 +7,6 @@ export default function detectStringType(input) {
   } else if (letterRegex.test(input)) {
     return `${input}`;
   } else {
-    return "Contact Us";
+    return "Contact For Price";
   }
 }

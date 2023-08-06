@@ -1,5 +1,5 @@
 "use client";
-import React, { use } from "react";
+import React from "react";
 import Image from "next/image";
 import { useSearchParams } from "next/navigation";
 import LightBox from "../../component/lightbox";
@@ -25,13 +25,13 @@ async function getAreaListing(city) {
   return res.json();
 }
 
-export default function Page() {
+export default async function Page() {
   const searchParams = useSearchParams();
   const address = searchParams.get("address");
   const id = searchParams.get("id");
 
-  const data = use(getIndividualListing(address, id));
-  const areaData = use(getAreaListing(data.city));
+  const data = await getIndividualListing(address, id);
+  const areaData = await getAreaListing(data.city);
 
   const similarListings =
     areaData.length > 0
@@ -56,11 +56,11 @@ export default function Page() {
       </section>
 
       <section className="container-layout listing_content">
-        <h1>{`${data.address}, ${data.city}`}</h1>
-        <h2 style={{ textTransform: "uppercase" }}>
+        <h1 id="title">{`${data.address}, ${data.city}`}</h1>
+        <h2 id="price_contact" style={{ textTransform: "uppercase" }}>
           {detectStringType(data.price)}
         </h2>
-        <a href="#photos" className="photos_btn" style={{ padding: "10px 0" }}>
+        <a href="#photos" className="photos_btn">
           <button>Browse for Photos</button>
         </a>
         <h3 className="description_title">Room Description</h3>

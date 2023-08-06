@@ -1,22 +1,17 @@
 "use client";
-import React, { useState, useEffect, use } from "react";
+import React, { useState, useEffect } from "react";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import ListingGallery from "../../component/listingGallery";
-
-async function getRentalListing(city) {
-  let url = `${process.env.API_ENDPOINT}/listing/rental`;
-  if (city && city !== "All") {
-    apiEndpoint += `?city=${encodeURIComponent(city)}`;
-  }
-  const res = await fetch(url);
-  return res.json();
-}
+import { useSearchParams } from "next/navigation";
 
 export default function Page() {
-  const [selectedCity, setSelectedCity] = useState("All");
+  const query = useSearchParams();
+  const cityquery = query.get("city");
+  const [selectedCity, setSelectedCity] = useState(cityquery || "All");
+
   const [listing, setListing] = useState([]);
   const [noResultsFound, setNoResultsFound] = useState(false);
 
@@ -27,17 +22,25 @@ export default function Page() {
   const cities = ["Surrey", "Burnaby"];
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const data = await getRentalListing(selectedCity);
-        setListing(data);
-        setNoResultsFound(data.length === 0);
-      } catch (error) {
-        console.error("Failed to fetch data:", error);
-      }
-    };
-
-    fetchData();
+    if (selectedCity) {
+      getRentalListing(selectedCity)
+        .then((data) => {
+          setListing(data);
+          setNoResultsFound(data.length === 0);
+        })
+        .catch((error) => {
+          console.error("Failed to fetch data:", error);
+        });
+    } else {
+      getRentalListing()
+        .then((data) => {
+          setListing(data);
+          setNoResultsFound(data.length === 0);
+        })
+        .catch((error) => {
+          console.error("Failed to fetch data:", error);
+        });
+    }
 
     const url = new URL(window.location.href);
     if (selectedCity === "All") {
@@ -101,4 +104,13 @@ export default function Page() {
       )}
     </main>
   );
+}
+
+async function getRentalListing(city) {
+  let url = `${process.env.API_ENDPOINT}/listing/rental`;
+  if (city && city !== "All") {
+    url += `?city=${encodeURIComponent(city)}`;
+  }
+  const res = await fetch(url);
+  return res.json();
 }

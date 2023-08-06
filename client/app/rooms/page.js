@@ -42,12 +42,6 @@ export default function Page() {
           console.error("Failed to fetch data:", error);
         });
     }
-    // const fetchData = async () => {
-    //   const listing = await getListing(selectedCity);
-    //   console.log({ listing });
-    // };
-
-    // fetchData();
 
     const url = new URL(window.location.href);
     if (selectedCity === "All") {
@@ -123,10 +117,10 @@ export default function Page() {
 }
 
 async function getListing(city) {
-  let apiEndpoint = `${process.env.API_ENDPOINT}/listing/city`;
+  let url = `${process.env.API_ENDPOINT}/listing/city`;
   if (city && city !== "All") {
-    apiEndpoint += `?city=${encodeURIComponent(city)}`;
+    url += `?city=${encodeURIComponent(city)}`;
   }
-  const apiResponse = await fetch(apiEndpoint);
-  return apiResponse.json();
+  const res = await fetch(url);
+  return res.json();
 }
