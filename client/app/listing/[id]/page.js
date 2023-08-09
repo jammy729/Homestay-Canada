@@ -1,4 +1,23 @@
 "use client";
+
+// async function getIndividualListing(address, id) {
+//   const url =
+//     `${process.env.API_ENDPOINT}/listing/detail?address=` +
+//     `${encodeURIComponent(address)}` +
+//     `&id=${encodeURIComponent(id)}`;
+
+//   const res = await fetch(url);
+//   return res.json();
+// }
+
+// async function getAreaListing(city) {
+//   const url =
+//     `${process.env.API_ENDPOINT}/listing/city` +
+//     `?city=${encodeURIComponent(city)}`;
+//   const res = await fetch(url);
+//   return res.json();
+// }
+
 import React from "react";
 import Image from "next/image";
 import { useSearchParams } from "next/navigation";
@@ -6,32 +25,18 @@ import LightBox from "../../component/lightbox";
 import Link from "next/link";
 import detectStringType from "@/utils/regex";
 import ContactForm from "../../component/contact_form";
+import { getIndividualListing } from "@/utils/getListing";
+import { getAreaListing } from "@/utils/getAreaListing";
 
-async function getIndividualListing(address, id) {
-  const url =
-    `${process.env.API_ENDPOINT}/listing/detail?address=` +
-    `${encodeURIComponent(address)}` +
-    `&id=${encodeURIComponent(id)}`;
-
-  const res = await fetch(url);
-  return res.json();
-}
-
-async function getAreaListing(city) {
-  const url =
-    `${process.env.API_ENDPOINT}/listing/city` +
-    `?city=${encodeURIComponent(city)}`;
-  const res = await fetch(url);
-  return res.json();
-}
+export const dynamic = "force-dynamic";
 
 export default async function Page() {
   const searchParams = useSearchParams();
   const address = searchParams.get("address");
   const id = searchParams.get("id");
 
-  const data = await getIndividualListing(address, id);
-  const areaData = await getAreaListing(data.city);
+  let data = await getIndividualListing(address, id);
+  let areaData = await getAreaListing(data.city);
 
   const similarListings =
     areaData.length > 0

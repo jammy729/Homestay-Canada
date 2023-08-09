@@ -40,7 +40,7 @@ const footer = () => {
 
           <h3 style={{ marginTop: "10px" }}>캐나다 홈스테이</h3>
           <p>
-            <Link href="tel: 7789030729" className="phone_number">
+            <Link href="tel:1-778-903-0729" className="phone_number">
               778.903.0729
             </Link>
           </p>

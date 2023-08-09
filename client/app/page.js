@@ -13,7 +13,7 @@ const dataPromise = getMainListing();
 
 export default function Page() {
   const listing = use(dataPromise);
-  console.log({ listing });
+  console.debug({ listing });
   return (
     <main>
       <section className="container-layout">

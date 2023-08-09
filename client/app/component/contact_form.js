@@ -94,7 +94,7 @@ const ContactForm = ({ content }) => {
         <div id="form_content_wrapper">
           <h2>{content}</h2>
           <h4>
-            <Link href="tel: 7789030729" className="phone_number">
+            <Link href="tel:1-778-903-0729" className="phone_number">
               778.903.0729
             </Link>
           </h4>

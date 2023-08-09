@@ -87,17 +87,16 @@ export default function Page() {
       </section>
 
       {/* LISTINGS */}
-      <section className="listings two_column container-full-layout">
-        {noResultsFound ? (
-          <div className="container-layout">
-            <p>No results found</p>
-          </div>
-        ) : (
-          listing.map((data, dataIndex) => (
+      {noResultsFound ? (
+        <div className="container-layout">
+          <p>No results found</p>
+        </div>
+      ) : (
+        <section className="listings two_column container-full-layout">
+          {listing.map((data, dataIndex) => (
             <ListingGallery
               key={dataIndex}
               address={data.address}
-              accommodationType={data.accommodationType}
               id={data._id}
               city={data.city}
               price={data.price}
@@ -109,9 +108,9 @@ export default function Page() {
                   : data.imageGallery[1])
               }
             />
-          ))
-        )}
-      </section>
+          ))}
+        </section>
+      )}
     </main>
   );
 }
